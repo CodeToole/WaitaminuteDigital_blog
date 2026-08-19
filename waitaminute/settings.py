@@ -24,7 +24,7 @@ load_dotenv(BASE_DIR / '.env')
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-secret-key-change-me')
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+DEBUG = str(os.environ.get('DEBUG', 'False')).strip().lower() in {'1', 'true', 'yes', 'on'}
 ALLOWED_HOSTS = [
     host.strip()
     for host in os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,[::1],testserver').split(',')
