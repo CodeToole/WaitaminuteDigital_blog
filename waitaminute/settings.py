@@ -25,7 +25,11 @@ load_dotenv(BASE_DIR / '.env')
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-secret-key-change-me')
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'testserver']
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,[::1],testserver').split(',')
+    if host.strip()
+]
 PUBLIC_SITE_URL = os.environ.get('PUBLIC_SITE_URL', 'http://127.0.0.1:8000')
 
 
@@ -93,6 +97,7 @@ DATABASES = {
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_HOST,
         'PORT': DB_PORT,
+        'OPTIONS': {'sslmode': 'require'},
     }
 }
 
