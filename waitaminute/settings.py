@@ -38,8 +38,12 @@ CSRF_TRUSTED_ORIGINS = [
     for origin in os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',')
     if origin.strip()
 ] or [
-    f"https://{h}" for h in ALLOWED_HOSTS if h not in {'localhost', '127.0.0.1', '[::1]', 'testserver'}
-] + ['http://localhost:8000', 'http://127.0.0.1:8000']
+    "https://waitaminutedigital.com",
+    "https://www.waitaminutedigital.com",
+    "https://waitaminutedigitalpy-gcemdqf2g8ecgfbg.westus3-01.azurewebsites.net",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
