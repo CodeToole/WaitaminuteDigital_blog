@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog | Waitaminute Digital{% endblock %}
+{% block meta %}
+  {{ block.super }}
+  <meta name="description" content="Read practical insights on modern work systems, digital strategy, AI workflows, and creative operations from Waitaminute Digital.">
+  <meta property="og:title" content="Blog | Waitaminute Digital">
+  <meta property="og:description" content="Practical insight for founders, operators, and creative teams building modern digital systems.">
+{% endblock %}
+
+{% block content %}
+<section class="section blog-page">
+  <div class="container">
+    <p class="eyebrow">Insights & updates</p>
+    <h1>Thinking for modern operators.</h1>
+
+    <div class="search-shell">
+      <label class="sr-only" for="post-search">Search blog posts</label>
+      <input id="post-search"
+             type="search"
+             name="q"
+             value="{{ query }}"
+             placeholder="Search articles..."
+             hx-get="{% url 'blog' %}"
+             hx-target="#post-grid"
+             hx-trigger="keyup changed delay:300ms"
+             hx-swap="innerHTML">
+    </div>
+
+    <div id="post-grid">
+      {% include 'blog/partials/post_list.html' %}
+    </div>
+  </div>
+</section>
+{% endblock %}

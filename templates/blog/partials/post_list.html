@@ -1,0 +1,22 @@
+{% if posts %}
+<div class="card-grid three-up blog-grid">
+  {% for post in posts %}
+  <article class="blog-card">
+    {% if post.cover_image %}
+    <div class="blog-card-image">
+      <img src="{{ post.cover_image.url }}" alt="{{ post.title }} cover image">
+    </div>
+    {% endif %}
+    <div class="blog-card-copy">
+      <p class="meta">{{ post.category.name|default:'Insight' }}</p>
+      <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+      <p>{{ post.excerpt }}</p>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+  <p>No posts match that search yet.</p>
+</div>
+{% endif %}

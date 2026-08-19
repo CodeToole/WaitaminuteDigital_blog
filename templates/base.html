@@ -1,0 +1,77 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block meta %}
+    <meta name="description" content="Waitaminute Digital builds modern work systems for creators and businesses.">
+    <meta property="og:title" content="Waitaminute Digital">
+    <meta property="og:description" content="Waitaminute Digital builds modern work systems for creators and businesses.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:card" content="summary_large_image">
+    {% endblock %}
+    <title>{% block title %}Waitaminute Digital{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{% static 'favicon/favicon-32.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+    <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    {% block extra_head %}{% endblock %}
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="container nav-wrap">
+          <a class="brand" href="{% url 'home' %}" aria-label="Waitaminute Digital home">
+            <img src="{% static 'img/logo/wmd-logo-full-onblack.png' %}" alt="Waitaminute Digital logo">
+          </a>
+          <nav class="main-nav" aria-label="Main navigation">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'home' %}#services">Services</a>
+            <a href="{% url 'portfolio' %}">Portfolio</a>
+            <a href="{% url 'home' %}#blog">Blog</a>
+            <a href="{% url 'home' %}#about">About</a>
+            <a href="{% url 'home' %}#contact">Contact</a>
+          </nav>
+          <a class="button button-primary" href="{% url 'services' %}#consultation">Book a Discovery Call</a>
+        </div>
+      </header>
+
+      <main>
+        {% block content %}{% endblock %}
+      </main>
+
+      <footer class="site-footer">
+        <div class="container footer-grid">
+          <div>
+            <a href="{% url 'home' %}" class="footer-brand" aria-label="Waitaminute Digital home">
+              <img src="{% static 'img/logo/wmd-logomark.png' %}" alt="Waitaminute logo mark">
+              <span>WAITAMINUTE</span>
+            </a>
+          </div>
+          <div>
+            <p class="footer-heading">Navigation</p>
+            <ul>
+              <li><a href="{% url 'home' %}#services">Services</a></li>
+              <li><a href="{% url 'portfolio' %}">Portfolio</a></li>
+              <li><a href="{% url 'home' %}#blog">Blog</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="footer-heading">Contact</p>
+            <ul>
+              <li><a href="mailto:hello@waitaminutedigital.com">hello@waitaminutedigital.com</a></li>
+              <li><a href="{% url 'services' %}#consultation">Tell us what you're building</a></li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

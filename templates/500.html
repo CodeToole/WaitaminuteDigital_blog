@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Something went wrong | Waitaminute Digital{% endblock %}
+{% block meta %}
+  {{ block.super }}
+  <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+
+{% block content %}
+<section class="section cta-band">
+  <div class="container cta-box">
+    <div>
+      <p class="eyebrow">500</p>
+      <h1>We hit a snag.</h1>
+      <p class="lead">The site is temporarily unavailable, but we’re already on it. Try refreshing or head back to the homepage.</p>
+    </div>
+    <a class="button button-primary" href="{% url 'home' %}">Return home</a>
+  </div>
+</section>
+{% endblock %}

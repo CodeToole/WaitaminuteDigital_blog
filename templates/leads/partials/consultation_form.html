@@ -1,0 +1,36 @@
+<form class="lead-form" method="post" hx-post="{% url 'lead_submit' %}" hx-target="#lead-form-shell" hx-swap="innerHTML">
+  {% csrf_token %}
+  <input type="text" name="website" class="honeypot" tabindex="-1" autocomplete="off">
+  <div class="field-grid">
+    <div class="field">
+      <label for="id_name">Name</label>
+      {{ form.name }}
+      {% if form.name.errors %}<div class="field-error">{{ form.name.errors|join:', ' }}</div>{% endif %}
+    </div>
+    <div class="field">
+      <label for="id_email">Email</label>
+      {{ form.email }}
+      {% if form.email.errors %}<div class="field-error">{{ form.email.errors|join:', ' }}</div>{% endif %}
+    </div>
+    <div class="field">
+      <label for="id_phone">Phone</label>
+      {{ form.phone }}
+    </div>
+    <div class="field">
+      <label for="id_business_name">Business / Project</label>
+      {{ form.business_name }}
+    </div>
+    <div class="field">
+      <label for="id_preferred_contact">Preferred contact</label>
+      {{ form.preferred_contact }}
+    </div>
+  </div>
+  <div class="field full-width">
+    <label for="id_message">Project details</label>
+    {{ form.message }}
+    {% if form.message.errors %}<div class="field-error">{{ form.message.errors|join:', ' }}</div>{% endif %}
+  </div>
+  <div class="form-actions">
+    <button type="submit" class="button button-primary">Book a Discovery Call</button>
+  </div>
+</form>

@@ -1,0 +1,25 @@
+:root {
+  --wmd-cyan: #00E5FF;
+  --wmd-purple: #8B5CF6;
+  --wmd-pink: #EC4899;
+  --wmd-black: #0A0A0A;
+  --wmd-white: #FFFFFF;
+  --wmd-navy: #1E1B4B;
+  --wmd-gray: #9CA3AF;
+  --wmd-charcoal: #374151;
+  --wmd-cyan-lite: #67E8F9;
+  --wmd-purple-lite: #A78BFA;
+  --wmd-grad-primary: linear-gradient(135deg, #00E5FF 0%, #8B5CF6 100%);
+  --wmd-grad-accent: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+  --wmd-grad-subtle: linear-gradient(135deg, #0A0A0A 0%, #1E1B4B 100%);
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 16px;
+  --sp-lg: 24px;
+  --sp-xl: 32px;
+  --sp-2xl: 48px;
+  --sp-3xl: 64px;
+  --sp-4xl: 96px;
+  --wmd-max-width: 1280px;
+  --wmd-radius: 12px;
+}

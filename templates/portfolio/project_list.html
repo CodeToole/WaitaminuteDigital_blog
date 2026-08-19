@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Portfolio | Waitaminute Digital{% endblock %}
+{% block meta %}
+  {{ block.super }}
+  <meta name="description" content="Explore recent portfolio work from Waitaminute Digital, including brand systems, website builds, and digital strategy for modern businesses.">
+  <meta property="og:title" content="Portfolio | Waitaminute Digital">
+  <meta property="og:description" content="Recent brand, product, and marketing work built for modern teams and creative operators.">
+{% endblock %}
+
+{% block content %}
+<section class="section portfolio-page">
+  <div class="container">
+    <p class="eyebrow">Portfolio</p>
+    <h1>Selected work for modern brands and creative operators.</h1>
+
+    <div class="filter-row" aria-label="Project filters">
+      <button class="filter-chip {% if not selected_tag %}active{% endif %}"
+              hx-get="{% url 'portfolio' %}"
+              hx-target="#project-grid"
+              hx-swap="innerHTML">
+        All work
+      </button>
+      {% for tag in tags %}
+      <button class="filter-chip {% if selected_tag == tag.slug %}active{% endif %}"
+              hx-get="{% url 'portfolio' %}?tag={{ tag.slug }}"
+              hx-target="#project-grid"
+              hx-swap="innerHTML">
+        {{ tag.name }}
+      </button>
+      {% endfor %}
+    </div>
+
+    <div id="project-grid">
+      {% include 'portfolio/partials/project_grid.html' %}
+    </div>
+  </div>
+</section>
+{% endblock %}

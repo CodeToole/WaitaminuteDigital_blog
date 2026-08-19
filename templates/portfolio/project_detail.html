@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.title }} | Waitaminute Digital{% endblock %}
+{% block meta %}
+  {{ block.super }}
+  <meta name="description" content="{{ project.summary|striptags|truncatechars:160 }}">
+  <meta property="og:title" content="{{ project.title }} | Waitaminute Digital">
+  <meta property="og:description" content="{{ project.summary|striptags|truncatechars:160 }}">
+{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container project-detail-shell">
+    <div class="project-detail-header">
+      <p class="eyebrow">Case study</p>
+      <h1>{{ project.title }}</h1>
+      <p class="lead">{{ project.summary }}</p>
+    </div>
+
+    <div class="project-hero visual-card project-panel">
+      {% if project.cover_image %}
+        <img src="{{ project.cover_image.url }}" alt="{{ project.title }} cover image">
+      {% else %}
+        <div class="project-placeholder"></div>
+      {% endif %}
+    </div>
+
+    <div class="project-meta">
+      <div>
+        <p class="meta-label">Client</p>
+        <p>{{ project.client|default:'Independent project' }}</p>
+      </div>
+      <div>
+        <p class="meta-label">Tags</p>
+        <p>
+          {% for tag in project.tags.all %}
+            <span class="tag-pill">{{ tag.name }}</span>
+          {% empty %}
+            <span class="muted-copy">No tags yet</span>
+          {% endfor %}
+        </p>
+      </div>
+      {% if project.url %}
+      <div>
+        <p class="meta-label">Link</p>
+        <p><a href="{{ project.url }}" target="_blank" rel="noopener">Visit project</a></p>
+      </div>
+      {% endif %}
+    </div>
+
+    <article class="project-body">
+      {{ project.body|linebreaks }}
+    </article>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Page not found | Waitaminute Digital{% endblock %}
+{% block meta %}
+  {{ block.super }}
+  <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+
+{% block content %}
+<section class="section cta-band">
+  <div class="container cta-box">
+    <div>
+      <p class="eyebrow">404</p>
+      <h1>That page isn’t here.</h1>
+      <p class="lead">The page you were looking for may have moved, or it may never have existed in the first place.</p>
+    </div>
+    <a class="button button-primary" href="{% url 'home' %}">Return home</a>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% if projects %}
+<div class="card-grid three-up project-grid">
+  {% for project in projects %}
+  <article class="project-card">
+    <div class="project-thumb project-thumb-{{ forloop.counter|add:'1' }}">
+      {% if project.cover_image %}
+        <img src="{{ project.cover_image.url }}" alt="{{ project.title }} cover image">
+      {% endif %}
+    </div>
+    <div class="project-card-body">
+      <p class="meta">{{ project.client|default:'Independent' }}</p>
+      <h3><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></h3>
+      <p>{{ project.summary }}</p>
+      <div class="tag-list">
+        {% for tag in project.tags.all|slice:':3' %}
+        <span class="tag-pill">{{ tag.name }}</span>
+        {% endfor %}
+      </div>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+  <p>No projects match that tag yet.</p>
+</div>
+{% endif %}
