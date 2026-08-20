@@ -138,14 +138,23 @@ class Command(BaseCommand):
             self.stderr.write(self.style.ERROR("No root Wagtail page found."))
             return
 
-        # Check if HomePage exists
-        homepage = HomePage.objects.first()
         body_data = json.dumps(get_default_homepage_body())
 
+        # Check if HomePage exists
+        homepage = HomePage.objects.first()
+
         if not homepage:
-            # Check for generic default page (depth=2)
-            default_page = Page.objects.filter(depth=2).first()
-            
+            # Delete or re-slug any default placeholder page under root
+            for child in list(root_page.get_children()):
+                specific_child = child.specific
+                if not isinstance(specific_child, HomePage):
+                    self.stdout.write(f"Removing placeholder page: '{child.title}' (slug='{child.slug}')")
+                    try:
+                        child.delete()
+                    except Exception as e:
+                        child.slug = f"old-{child.id}"
+                        child.save()
+
             homepage = HomePage(
                 title="Waitaminute Digital",
                 slug="home",
@@ -154,22 +163,13 @@ class Command(BaseCommand):
                 search_description="Waitaminute Digital designs modern websites, automation workflows, and digital systems for creators, founders, and ambitious teams.",
             )
             homepage.body = body_data
-
-            if default_page and not hasattr(default_page, "homepage"):
-                # Delete or unpublish the starter placeholder
-                root_page.add_child(instance=homepage)
-                try:
-                    default_page.delete()
-                except Exception:
-                    pass
-            else:
-                root_page.add_child(instance=homepage)
-
+            root_page.add_child(instance=homepage)
             homepage.save_revision().publish()
             self.stdout.write(self.style.SUCCESS(f"Created new HomePage '{homepage.title}' (id={homepage.id})."))
         else:
             if options.get("force_body") or not homepage.body:
                 homepage.body = body_data
+                homepage.title = "Waitaminute Digital"
                 homepage.save_revision().publish()
                 self.stdout.write(self.style.SUCCESS("Updated HomePage StreamField content."))
 
@@ -216,3 +216,4 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS("Created AboutPage subpage."))
 
         self.stdout.write(self.style.SUCCESS("Wagtail page tree and production homepage setup complete!"))
+
