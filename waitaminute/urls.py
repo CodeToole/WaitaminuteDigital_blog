@@ -14,8 +14,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
+from django.views.static import serve
 
 from core import views as core_views
 
@@ -28,6 +31,7 @@ urlpatterns = [
     path('robots.txt', core_views.robots_txt, name='robots_txt'),
     path('sitemap.xml', core_views.sitemap_xml, name='sitemap_xml'),
     path('admin/', admin.site.urls),
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
 
 handler404 = 'core.views.page_not_found'
