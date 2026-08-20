@@ -32,7 +32,15 @@ jobs:
           source antenv/bin/activate
           pip install -r requirements.txt
                 
-      # By default, when you enable GitHub CI/CD integration through the Azure portal, the platform automatically sets the SCM_DO_BUILD_DURING_DEPLOYMENT application setting to true. This triggers the use of Oryx, a build engine that handles application compilation and dependency installation (e.g., pip install) directly on the platform during deployment. Hence, we exclude the antenv virtual environment directory from the deployment artifact to reduce the payload size. 
+      # Azure App Service must enable Oryx build automation via SCM_DO_BUILD_DURING_DEPLOYMENT=1
+      # if the deployment relies on App Service to install dependencies from requirements.txt during deploy.
+      - name: Verify dependency file for Azure deployment
+        run: |
+          test -f requirements.txt
+          grep -E '^Django==6\.0\.8$' requirements.txt
+          grep -E '^wagtail==7\.4\.2$' requirements.txt
+
+      # By default, when you enable GitHub CI/CD integration through the Azure portal, the platform automatically sets the SCM_DO_BUILD_DURING_DEPLOYMENT application setting to true. This triggers the use of Oryx, a build engine that handles application compilation and dependency installation (e.g., pip install) directly on the platform during deployment. Hence, we exclude the antenv virtual environment directory from the deployment artifact to reduce the payload size.
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
