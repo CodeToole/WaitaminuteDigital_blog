@@ -17,13 +17,23 @@
       <p class="lead">{{ project.summary }}</p>
     </div>
 
-    <div class="project-hero visual-card project-panel">
-      {% if project.cover_image %}
-        <img src="{{ project.cover_image.url }}" alt="{{ project.title }} cover image">
-      {% else %}
-        <div class="project-placeholder"></div>
-      {% endif %}
+    {% if project.youtube_embed_url %}
+    <div class="video-container visual-card">
+      <iframe src="{{ project.youtube_embed_url }}"
+              title="{{ project.title }}"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
     </div>
+    {% elif project.display_image_url %}
+    <div class="project-hero visual-card project-panel">
+      <img src="{{ project.display_image_url }}" alt="{{ project.title }} cover image">
+    </div>
+    {% else %}
+    <div class="project-hero visual-card project-panel">
+      <div class="project-placeholder"></div>
+    </div>
+    {% endif %}
 
     <div class="project-meta">
       <div>

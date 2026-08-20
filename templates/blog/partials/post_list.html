@@ -2,9 +2,9 @@
 <div class="card-grid three-up blog-grid">
   {% for post in posts %}
   <article class="blog-card">
-    {% if post.cover_image %}
+    {% if post.display_image_url %}
     <div class="blog-card-image">
-      <img src="{{ post.cover_image.url }}" alt="{{ post.title }} cover image">
+      <img src="{{ post.display_image_url }}" alt="{{ post.title }} cover image">
     </div>
     {% endif %}
     <div class="blog-card-copy">

@@ -12,9 +12,17 @@
 <section class="section article-shell">
   <div class="container article-container">
     <article class="article-card">
-      {% if post.cover_image %}
+      {% if post.youtube_embed_url %}
+      <div class="video-container" style="margin-bottom: 24px;">
+        <iframe src="{{ post.youtube_embed_url }}"
+                title="{{ post.title }}"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+      </div>
+      {% elif post.display_image_url %}
       <div class="article-cover">
-        <img src="{{ post.cover_image.url }}" alt="{{ post.title }} cover image">
+        <img src="{{ post.display_image_url }}" alt="{{ post.title }} cover image">
       </div>
       {% endif %}
 

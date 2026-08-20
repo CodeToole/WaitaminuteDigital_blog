@@ -3,8 +3,8 @@
   {% for project in projects %}
   <article class="project-card">
     <div class="project-thumb project-thumb-{{ forloop.counter|add:'1' }}">
-      {% if project.cover_image %}
-        <img src="{{ project.cover_image.url }}" alt="{{ project.title }} cover image">
+      {% if project.display_image_url %}
+        <img src="{{ project.display_image_url }}" alt="{{ project.title }} cover image">
       {% endif %}
     </div>
     <div class="project-card-body">
