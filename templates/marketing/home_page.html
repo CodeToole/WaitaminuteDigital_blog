@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags %}
+
+{% block title %}{{ page.title }} | Waitaminute Digital{% endblock %}
+
+{% block content %}
+  {% if page.body %}
+    {% for block in page.body %}
+      {% include_block block %}
+    {% endfor %}
+  {% else %}
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Built for creators. Engineered for modern work.</p>
+          <h1>We architect modern work systems that turn effort into momentum.</h1>
+          <p class="lead">Waitaminute Digital helps founders and teams modernize their web presence, automate operations, and turn customer interest into qualified follow-up.</p>
+          <div class="cta-row">
+            <a class="button button-primary" href="{% url 'services' %}#consultation">Book a Discovery Call</a>
+            <a class="button button-secondary" href="{% url 'services' %}">Explore services</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  {% if featured_projects %}
+    <section class="section muted">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Featured work</p>
+          <h2>Systems that bring structure to creative momentum.</h2>
+        </div>
+        <div class="card-grid three-up">
+          {% for project in featured_projects %}
+            <article class="project-card">
+              <div class="project-thumb gradient-{{ forloop.counter }}"></div>
+              <h3>{{ project.title }}</h3>
+              <p>{{ project.summary }}</p>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  {% if latest_posts %}
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Insights</p>
+          <h2>Practical perspectives for modern operators.</h2>
+        </div>
+        <div class="card-grid three-up">
+          {% for post in latest_posts %}
+            <article class="post-card">
+              <p class="meta">{{ post.category.name|default:'Strategy' }}</p>
+              <h3>{{ post.title }}</h3>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}

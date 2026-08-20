@@ -1,0 +1,27 @@
+{% load wagtailimages_tags %}
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      {% if value.eyebrow %}
+        <p class="eyebrow">{{ value.eyebrow }}</p>
+      {% endif %}
+      <h1>{{ value.title }}</h1>
+      {% if value.subtitle %}
+        <p class="lead">{{ value.subtitle }}</p>
+      {% endif %}
+      <div class="cta-row">
+        {% if value.primary_cta_url %}
+          <a class="button button-primary" href="{{ value.primary_cta_url }}">{{ value.primary_cta_label }}</a>
+        {% endif %}
+        {% if value.secondary_cta_url %}
+          <a class="button button-secondary" href="{{ value.secondary_cta_url }}">{{ value.secondary_cta_label }}</a>
+        {% endif %}
+      </div>
+    </div>
+    {% if value.image %}
+      <div class="hero-visual" aria-label="Marketing image panel">
+        {% image value.image original class="hero-image" %}
+      </div>
+    {% endif %}
+  </div>
+</section>

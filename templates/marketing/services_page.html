@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags %}
+
+{% block title %}{{ page.title }} | Waitaminute Digital{% endblock %}
+
+{% block content %}
+  {% if page.body %}
+    {% for block in page.body %}
+      {% include_block block %}
+    {% endfor %}
+  {% else %}
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Services</p>
+          <h1>{{ page.title }}</h1>
+          <p>We design conversion-focused websites, automate repetitive work, and build digital systems that give teams more clarity and momentum.</p>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}

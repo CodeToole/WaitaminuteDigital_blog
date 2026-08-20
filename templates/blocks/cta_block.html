@@ -1,0 +1,14 @@
+<section class="section cta-band" id="contact">
+  <div class="container cta-box">
+    <div>
+      <p class="eyebrow">Let’s talk</p>
+      <h2>{{ value.heading }}</h2>
+      {% if value.body %}
+        <p>{{ value.body }}</p>
+      {% endif %}
+    </div>
+    {% if value.button_url %}
+      <a class="button button-primary" href="{{ value.button_url }}">{{ value.button_label }}</a>
+    {% endif %}
+  </div>
+</section>

@@ -1,0 +1,22 @@
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-heading">
+      {% if value.heading %}
+        <p class="eyebrow">Services</p>
+        <h2>{{ value.heading }}</h2>
+      {% endif %}
+      {% if value.intro %}
+        <p>{{ value.intro }}</p>
+      {% endif %}
+    </div>
+    <div class="card-grid three-up">
+      {% for card in value.cards %}
+        <article class="info-card">
+          <span class="card-kicker">{% if card.icon %}{{ card.icon }}{% else %}0{{ forloop.counter }}{% endif %}</span>
+          <h3>{{ card.title }}</h3>
+          <p>{{ card.description }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>

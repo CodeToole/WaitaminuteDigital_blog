@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags %}
+
+{% block title %}{{ page.title }} | Waitaminute Digital{% endblock %}
+
+{% block content %}
+  {% if page.body %}
+    {% for block in page.body %}
+      {% include_block block %}
+    {% endfor %}
+  {% else %}
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">About</p>
+          <h1>{{ page.title }}</h1>
+          <p>Waitaminute Digital helps founders and teams modernize their web presence, streamline recurring work, and design sharper digital experiences.</p>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}

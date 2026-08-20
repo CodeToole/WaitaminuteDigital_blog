@@ -35,18 +35,18 @@
     <div class="site-shell">
       <header class="site-header">
         <div class="container nav-wrap">
-          <a class="brand" href="{% url 'home' %}" aria-label="Waitaminute Digital home">
+          <a class="brand" href="/" aria-label="Waitaminute Digital home">
             <img src="{% static 'img/logo/wmd-logo-full-onblack.png' %}" alt="Waitaminute Digital logo">
           </a>
           <nav class="main-nav" aria-label="Main navigation">
-            <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'home' %}#services">Services</a>
-            <a href="{% url 'portfolio' %}">Portfolio</a>
-            <a href="{% url 'home' %}#blog">Blog</a>
-            <a href="{% url 'home' %}#about">About</a>
-            <a href="{% url 'home' %}#contact">Contact</a>
+            <a href="/">Home</a>
+            <a href="/services/">Services</a>
+            <a href="/portfolio/">Portfolio</a>
+            <a href="/blog/">Blog</a>
+            <a href="/about/">About</a>
+            <a href="/services/#consultation">Contact</a>
           </nav>
-          <a class="button button-primary" href="{% url 'services' %}#consultation">Book a Discovery Call</a>
+          <a class="button button-primary" href="/services/#consultation">Book a Discovery Call</a>
         </div>
       </header>
 
@@ -57,7 +57,7 @@
       <footer class="site-footer">
         <div class="container footer-grid">
           <div>
-            <a href="{% url 'home' %}" class="footer-brand" aria-label="Waitaminute Digital home">
+            <a href="/" class="footer-brand" aria-label="Waitaminute Digital home">
               <img src="{% static 'img/logo/wmd-logomark.png' %}" alt="Waitaminute logo mark">
               <span>WAITAMINUTE</span>
             </a>
@@ -65,16 +65,16 @@
           <div>
             <p class="footer-heading">Navigation</p>
             <ul>
-              <li><a href="{% url 'home' %}#services">Services</a></li>
-              <li><a href="{% url 'portfolio' %}">Portfolio</a></li>
-              <li><a href="{% url 'home' %}#blog">Blog</a></li>
+              <li><a href="/services/">Services</a></li>
+              <li><a href="/portfolio/">Portfolio</a></li>
+              <li><a href="/blog/">Blog</a></li>
             </ul>
           </div>
           <div>
             <p class="footer-heading">Contact</p>
             <ul>
               <li><a href="mailto:hello@waitaminutedigital.com">hello@waitaminutedigital.com</a></li>
-              <li><a href="{% url 'services' %}#consultation">Tell us what you're building</a></li>
+              <li><a href="/services/#consultation">Tell us what you're building</a></li>
             </ul>
           </div>
         </div>
