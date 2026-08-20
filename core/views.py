@@ -16,10 +16,11 @@ def robots_txt(request):
 
 def sitemap_xml(request):
     items = [
-        {'loc': request.build_absolute_uri(reverse('home')), 'lastmod': None},
-        {'loc': request.build_absolute_uri(reverse('services')), 'lastmod': None},
-        {'loc': request.build_absolute_uri(reverse('portfolio')), 'lastmod': None},
-        {'loc': request.build_absolute_uri(reverse('blog')), 'lastmod': None},
+        {'loc': request.build_absolute_uri('/'), 'lastmod': None},
+        {'loc': request.build_absolute_uri('/services/'), 'lastmod': None},
+        {'loc': request.build_absolute_uri('/about/'), 'lastmod': None},
+        {'loc': request.build_absolute_uri('/portfolio/'), 'lastmod': None},
+        {'loc': request.build_absolute_uri('/blog/'), 'lastmod': None},
     ]
 
     for project in Project.objects.all():

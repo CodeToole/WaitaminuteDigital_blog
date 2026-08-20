@@ -1,5 +1,7 @@
 asgiref==3.12.1
 Django==6.1
+wagtail>=6.3,<8.0
+django-taggit>=5.0,<7.0
 gunicorn==26.1.0
 pillow==12.3.0
 psycopg==3.3.4

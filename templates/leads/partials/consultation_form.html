@@ -1,6 +1,6 @@
 <form class="lead-form" method="post" hx-post="{% url 'lead_submit' %}" hx-target="#lead-form-shell" hx-swap="innerHTML">
   {% csrf_token %}
-  <input type="text" name="website" class="honeypot" tabindex="-1" autocomplete="off">
+  {{ form.website }}
   <div class="field-grid">
     <div class="field">
       <label for="id_name">Name</label>

@@ -19,18 +19,22 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.static import serve
+from wagtail import urls as wagtail_urls
+from wagtail.admin import urls as wagtailadmin_urls
+from wagtail.documents import urls as wagtaildocs_urls
 
 from core import views as core_views
 
 urlpatterns = [
-    path('', include('core.urls')),
+    path('admin/', admin.site.urls),
+    path('cms/', include(wagtailadmin_urls)),
+    path('documents/', include(wagtaildocs_urls)),
     path('portfolio/', include('portfolio.urls')),
     path('blog/', include('blog.urls')),
-    path('services/', include('services.urls')),
     path('leads/', include('leads.urls')),
     path('robots.txt', core_views.robots_txt, name='robots_txt'),
     path('sitemap.xml', core_views.sitemap_xml, name='sitemap_xml'),
-    path('admin/', admin.site.urls),
+    path('', include(wagtail_urls)),
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
 
