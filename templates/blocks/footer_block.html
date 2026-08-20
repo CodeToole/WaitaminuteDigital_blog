@@ -1,0 +1,36 @@
+{% load static %}
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <a href="/" class="footer-brand" aria-label="Waitaminute Digital home">
+        <img src="{% static 'img/logo/wmd-logomark.png' %}" alt="Waitaminute logo mark">
+        <span>{{ value.brand_name|default:'WAITAMINUTE' }}</span>
+      </a>
+      {% if value.tagline %}
+        <p class="meta" style="margin-top: 8px;">{{ value.tagline }}</p>
+      {% endif %}
+    </div>
+    <div>
+      <p class="footer-heading">Navigation</p>
+      <ul>
+        {% if value.nav_links %}
+          {% for link in value.nav_links %}
+            <li><a href="{{ link.url }}">{{ link.label }}</a></li>
+          {% endfor %}
+        {% else %}
+          <li><a href="/services/">Services</a></li>
+          <li><a href="/portfolio/">Portfolio</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/about/">About</a></li>
+        {% endif %}
+      </ul>
+    </div>
+    <div>
+      <p class="footer-heading">Contact</p>
+      <ul>
+        <li><a href="mailto:{{ value.email|default:'hello@waitaminutedigital.com' }}">{{ value.email|default:'hello@waitaminutedigital.com' }}</a></li>
+        <li><a href="{{ value.contact_link_url|default:'/services/#consultation' }}">{{ value.contact_link_label|default:"Tell us what you're building" }}</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

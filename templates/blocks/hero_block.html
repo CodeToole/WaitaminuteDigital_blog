@@ -10,18 +10,34 @@
         <p class="lead">{{ value.subtitle }}</p>
       {% endif %}
       <div class="cta-row">
-        {% if value.primary_cta_url %}
+        {% if value.primary_cta_label and value.primary_cta_url %}
           <a class="button button-primary" href="{{ value.primary_cta_url }}">{{ value.primary_cta_label }}</a>
         {% endif %}
-        {% if value.secondary_cta_url %}
+        {% if value.secondary_cta_label and value.secondary_cta_url %}
           <a class="button button-secondary" href="{{ value.secondary_cta_url }}">{{ value.secondary_cta_label }}</a>
         {% endif %}
       </div>
+      {% if value.micro_points %}
+        <ul class="micro-points">
+          {% for point in value.micro_points %}
+            <li>{{ point }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
     </div>
-    {% if value.image %}
-      <div class="hero-visual" aria-label="Marketing image panel">
-        {% image value.image original class="hero-image" %}
-      </div>
-    {% endif %}
+    <div class="hero-visual" aria-label="Brand visual panel">
+      {% if value.image %}
+        <div class="visual-card" style="display: flex; align-items: center; justify-content: center; padding: 0;">
+          {% image value.image original class="hero-image" style="width: 100%; height: 100%; object-fit: cover;" %}
+        </div>
+      {% else %}
+        <div class="visual-card">
+          <span class="badge">{{ value.badge_text|default:'Modern Work' }}</span>
+          <div class="signal-ring"></div>
+          <div class="pulse-block"></div>
+        </div>
+      {% endif %}
+    </div>
   </div>
 </section>
+

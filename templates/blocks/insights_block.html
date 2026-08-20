@@ -1,0 +1,35 @@
+<section class="section" id="blog">
+  <div class="container">
+    <div class="section-heading">
+      {% if value.eyebrow %}
+        <p class="eyebrow">{{ value.eyebrow }}</p>
+      {% endif %}
+      {% if value.heading %}
+        <h2>{{ value.heading }}</h2>
+      {% endif %}
+    </div>
+    <div class="card-grid three-up">
+      {% if latest_posts %}
+        {% for post in latest_posts %}
+          <article class="post-card">
+            <p class="meta">{{ post.category.name|default:'Strategy' }}</p>
+            <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+          </article>
+        {% endfor %}
+      {% else %}
+        <article class="post-card">
+          <p class="meta">Strategy</p>
+          <h3><a href="/blog/">Designing a website that acts like a sales system</a></h3>
+        </article>
+        <article class="post-card">
+          <p class="meta">AI</p>
+          <h3><a href="/blog/">3 signs your team is ready for workflow automation</a></h3>
+        </article>
+        <article class="post-card">
+          <p class="meta">Operations</p>
+          <h3><a href="/blog/">What a modern work stack should feel like</a></h3>
+        </article>
+      {% endif %}
+    </div>
+  </div>
+</section>
