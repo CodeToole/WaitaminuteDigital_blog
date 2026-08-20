@@ -1,35 +1,45 @@
 <form class="lead-form" method="post" hx-post="{% url 'lead_submit' %}" hx-target="#lead-form-shell" hx-swap="innerHTML">
   {% csrf_token %}
   {{ form.website }}
+
   <div class="field-grid">
     <div class="field">
-      <label for="id_name">Name</label>
+      <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
       {{ form.name }}
       {% if form.name.errors %}<div class="field-error">{{ form.name.errors|join:', ' }}</div>{% endif %}
     </div>
+
     <div class="field">
-      <label for="id_email">Email</label>
+      <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
       {{ form.email }}
       {% if form.email.errors %}<div class="field-error">{{ form.email.errors|join:', ' }}</div>{% endif %}
     </div>
+
     <div class="field">
-      <label for="id_phone">Phone</label>
+      <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
       {{ form.phone }}
+      {% if form.phone.errors %}<div class="field-error">{{ form.phone.errors|join:', ' }}</div>{% endif %}
     </div>
+
     <div class="field">
-      <label for="id_business_name">Business / Project</label>
-      {{ form.business_name }}
-    </div>
-    <div class="field">
-      <label for="id_preferred_contact">Preferred contact</label>
+      <label for="{{ form.preferred_contact.id_for_label }}">{{ form.preferred_contact.label }}</label>
       {{ form.preferred_contact }}
+      {% if form.preferred_contact.errors %}<div class="field-error">{{ form.preferred_contact.errors|join:', ' }}</div>{% endif %}
+    </div>
+
+    <div class="field full-width">
+      <label for="{{ form.business_name.id_for_label }}">{{ form.business_name.label }}</label>
+      {{ form.business_name }}
+      {% if form.business_name.errors %}<div class="field-error">{{ form.business_name.errors|join:', ' }}</div>{% endif %}
+    </div>
+
+    <div class="field full-width">
+      <label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
+      {{ form.message }}
+      {% if form.message.errors %}<div class="field-error">{{ form.message.errors|join:', ' }}</div>{% endif %}
     </div>
   </div>
-  <div class="field full-width">
-    <label for="id_message">Project details</label>
-    {{ form.message }}
-    {% if form.message.errors %}<div class="field-error">{{ form.message.errors|join:', ' }}</div>{% endif %}
-  </div>
+
   <div class="form-actions">
     <button type="submit" class="button button-primary">Book a Discovery Call</button>
   </div>
