@@ -446,7 +446,7 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 18px;
-  max-width: 560px;
+  width: min(100%, 640px);
 }
 
 .field-grid {
@@ -494,6 +494,16 @@ h3 {
   border-color: rgba(0, 229, 255, 0.65);
 }
 
+.form-control {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  background: rgba(17, 24, 39, 0.8);
+  color: var(--text);
+  padding: 0.9rem 1rem;
+  font: inherit;
+}
+
 .field-error {
   color: #fca5a5;
   font-size: 0.82rem;
@@ -504,7 +514,8 @@ h3 {
   justify-content: flex-start;
 }
 
-.honeypot {
+.honeypot,
+input[type="hidden"] {
   position: absolute;
   left: -9999px;
   width: 1px;
