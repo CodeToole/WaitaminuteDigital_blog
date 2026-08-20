@@ -1,6 +1,6 @@
 import json
 from django.core.management.base import BaseCommand
-from wagtail.models import Page, Site
+from wagtail.models import Locale, Page, Site
 from marketing.models import HomePage, ServicesPage, AboutPage
 
 
@@ -9,13 +9,13 @@ def get_default_homepage_body():
         {
             "type": "hero",
             "value": {
-                "eyebrow": "Built for creators. Engineered for modern work.",
-                "title": "We architect modern work systems that turn effort into momentum.",
-                "subtitle": "Waitaminute Digital helps founders and teams modernize their web presence, automate operations, and turn customer interest into qualified follow-up.",
+                "eyebrow": "Built for creators.",
+                "title": "Engineered for modern work.",
+                "subtitle": "Waitaminute Digital is a modern web, automation, and AI solutions studio. We architect digital systems that turn effort into momentum.",
                 "primary_cta_label": "Book a Discovery Call",
-                "primary_cta_url": "/services/#consultation",
-                "secondary_cta_label": "Explore services",
-                "secondary_cta_url": "/services/",
+                "primary_cta_url": "/services/",
+                "secondary_cta_label": "View Our Work",
+                "secondary_cta_url": "/portfolio/",
                 "micro_points": [
                     "Azure-ready builds",
                     "Microsoft 365 + Copilot workflows",
@@ -29,28 +29,28 @@ def get_default_homepage_body():
             "value": {
                 "eyebrow": "Services",
                 "heading": "What we build for ambitious teams.",
-                "intro": "",
+                "intro": "We design conversion-focused websites, automate repetitive work, and build digital systems that give teams more clarity and momentum.",
                 "cards": [
                     {
                         "kicker": "01",
                         "title": "Modern Work Websites",
                         "description": "High-converting websites designed around clarity, authority, and action.",
                         "link_url": "/services/",
-                        "icon": "",
+                        "icon": "code",
                     },
                     {
                         "kicker": "02",
-                        "title": "AI & Automation",
+                        "title": "AI and Automation",
                         "description": "Copilot Studio, Power Automate, and workflow design that removes repetitive work.",
                         "link_url": "/services/",
-                        "icon": "",
+                        "icon": "bolt",
                     },
                     {
                         "kicker": "03",
-                        "title": "Website-as-a-Service",
-                        "description": "Ongoing design and optimization for teams that need their digital presence to evolve.",
+                        "title": "Managed Website Solutions",
+                        "description": "Ongoing design, engineering, and optimization for teams that need their digital presence to evolve.",
                         "link_url": "/services/",
-                        "icon": "",
+                        "icon": "chart",
                     },
                 ],
             },
@@ -60,24 +60,24 @@ def get_default_homepage_body():
             "value": {
                 "eyebrow": "Featured work",
                 "heading": "Systems that bring structure to creative momentum.",
-                "intro": "",
+                "intro": "Selected projects and client systems built for scale.",
                 "show_dynamic_projects": True,
                 "cards": [
                     {
-                        "title": "Brand architecture",
-                        "summary": "Messaging and customer journey aligned with a sharper digital story.",
+                        "title": "The Acting Collective",
+                        "summary": "Digital platform and community architecture for modern performers and creatives.",
                         "gradient_class": "gradient-one",
                         "link_url": "/portfolio/",
                     },
                     {
-                        "title": "AI workflows",
-                        "summary": "Automations that reduce admin friction without losing the human touch.",
+                        "title": "Unicorn Bounty Hunters",
+                        "summary": "Interactive brand experience and digital platform built for scale.",
                         "gradient_class": "gradient-two",
                         "link_url": "/portfolio/",
                     },
                     {
-                        "title": "Marketing systems",
-                        "summary": "Web experiences that convert attention into conversations and pipeline.",
+                        "title": "Huncho Fest",
+                        "summary": "Live event marketing and festival web experience driving ticket conversions.",
                         "gradient_class": "gradient-three",
                         "link_url": "/portfolio/",
                     },
@@ -96,8 +96,8 @@ def get_default_homepage_body():
             "type": "cta",
             "value": {
                 "eyebrow": "Let’s talk",
-                "heading": "Tell us what you’re building.",
-                "body": "",
+                "heading": "Tell us what you're building.",
+                "body": "Every engagement is custom-scoped after a discovery call to match your operational goals and technical requirements.",
                 "button_label": "Book a Discovery Call",
                 "button_url": "/services/#consultation",
             },
@@ -105,8 +105,8 @@ def get_default_homepage_body():
         {
             "type": "footer",
             "value": {
-                "brand_name": "WAITAMINUTE",
-                "tagline": "Built for creators. Engineered for modern work.",
+                "brand_name": "Waitaminute Digital",
+                "tagline": "Built for creators. Engineered for modern work. — Mobile, Alabama",
                 "email": "hello@waitaminutedigital.com",
                 "contact_link_label": "Tell us what you're building",
                 "contact_link_url": "/services/#consultation",
@@ -123,97 +123,152 @@ def get_default_homepage_body():
 
 
 class Command(BaseCommand):
-    help = "Set up the production-ready Wagtail HomePage, replace default starter page, and configure Site."
+    help = "Idempotently set up the production-ready Wagtail HomePage, archive starter page, and configure default Site."
 
     def add_arguments(self, parser):
         parser.add_argument(
             "--force-body",
             action="store_true",
-            help="Overwrite existing HomePage StreamField body with default production content.",
+            help="Overwrite existing HomePage StreamField body with default production content even if body is not empty.",
         )
 
     def handle(self, *args, **options):
+        # 1. Default Locale
+        locale = Locale.get_default()
+        if not locale:
+            locale = Locale.objects.first()
+        if not locale:
+            locale = Locale.objects.create(language_code="en-us")
+        self.stdout.write(f"Default Locale: {locale.language_code} (id={locale.id})")
+
+        # 2. Selected Root Page
         root_page = Page.get_first_root_node()
         if not root_page:
-            self.stderr.write(self.style.ERROR("No root Wagtail page found."))
-            return
+            root_page = Page.objects.filter(depth=1).first()
+        if not root_page:
+            root_page = Page.add_root(instance=Page(title="Root", slug="root", locale=locale))
+        self.stdout.write(f"Selected Root Page: '{root_page.title}' (id={root_page.id}, path={root_page.path})")
 
-        body_data = json.dumps(get_default_homepage_body())
+        # 3. Inspect existing children of root_page
+        root_children = list(root_page.get_children())
+        archived_starter = None
+        existing_homepage = None
 
-        # Check if HomePage exists
-        homepage = HomePage.objects.first()
-
-        if not homepage:
-            # Delete or re-slug any default placeholder page under root
-            for child in list(root_page.get_children()):
-                specific_child = child.specific
-                if not isinstance(specific_child, HomePage):
-                    self.stdout.write(f"Removing placeholder page: '{child.title}' (slug='{child.slug}')")
+        for child in root_children:
+            specific_child = child.specific
+            if isinstance(specific_child, HomePage):
+                existing_homepage = specific_child
+            elif child.slug == "home" or "Welcome to your new Wagtail site" in child.title:
+                starter = specific_child
+                starter.title = "Archived Wagtail Starter Page"
+                starter.slug = "wagtail-starter-archive"
+                starter.live = False
+                if hasattr(starter, "unpublish"):
                     try:
-                        child.delete()
-                    except Exception as e:
-                        child.slug = f"old-{child.id}"
-                        child.save()
+                        starter.unpublish()
+                    except Exception:
+                        pass
+                starter.save()
+                archived_starter = starter
+                self.stdout.write(
+                    self.style.WARNING(
+                        f"Archived starter page: '{starter.title}' (id={starter.id}, slug='{starter.slug}', live={starter.live})"
+                    )
+                )
 
+        if not archived_starter:
+            self.stdout.write("Archived starter page: None (no unarchived starter placeholder found)")
+
+        # 4. Reused or Created HomePage
+        if not existing_homepage:
+            existing_homepage = HomePage.objects.first()
+
+        body_json = json.dumps(get_default_homepage_body())
+
+        if not existing_homepage:
             homepage = HomePage(
                 title="Waitaminute Digital",
                 slug="home",
                 intro="Built for creators. Engineered for modern work.",
+                locale=locale,
                 live=True,
                 search_description="Waitaminute Digital designs modern websites, automation workflows, and digital systems for creators, founders, and ambitious teams.",
             )
-            homepage.body = body_data
+            homepage.body = body_json
             root_page.add_child(instance=homepage)
-            homepage.save_revision().publish()
-            self.stdout.write(self.style.SUCCESS(f"Created new HomePage '{homepage.title}' (id={homepage.id})."))
+            action_desc = "Created new HomePage"
         else:
+            homepage = existing_homepage
+            homepage.title = "Waitaminute Digital"
+            homepage.slug = "home"
+            homepage.locale = locale
+            homepage.intro = "Built for creators. Engineered for modern work."
             if options.get("force_body") or not homepage.body:
-                homepage.body = body_data
-                homepage.title = "Waitaminute Digital"
-                homepage.save_revision().publish()
-                self.stdout.write(self.style.SUCCESS("Updated HomePage StreamField content."))
+                homepage.body = body_json
+            homepage.save()
+            action_desc = "Reused and updated existing HomePage"
 
-        # Configure or create Site
+        self.stdout.write(f"Reused or created homepage: {action_desc} '{homepage.title}' (id={homepage.id}, slug='{homepage.slug}')")
+
+        # 5. Publication Result
+        revision = homepage.save_revision()
+        revision.publish()
+        homepage.refresh_from_db()
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"Publication result: HomePage '{homepage.title}' published successfully (id={homepage.id}, live={homepage.live}, revision_id={revision.id})"
+            )
+        )
+
+        # 6. Site Root Assignment
         site = Site.objects.filter(is_default_site=True).first() or Site.objects.first()
         if site:
-            site.root_page = homepage
+            site.hostname = "waitaminutedigital.com"
+            site.port = 443
             site.site_name = "Waitaminute Digital"
+            site.root_page = homepage
             site.is_default_site = True
             site.save()
-            self.stdout.write(self.style.SUCCESS(f"Updated default Wagtail Site (id={site.id}) root page to HomePage."))
         else:
             site = Site.objects.create(
-                hostname="localhost",
-                port=80,
+                hostname="waitaminutedigital.com",
+                port=443,
                 site_name="Waitaminute Digital",
                 root_page=homepage,
                 is_default_site=True,
             )
-            self.stdout.write(self.style.SUCCESS(f"Created default Wagtail Site with root page '{homepage.title}'."))
 
-        # Ensure ServicesPage subpage exists
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"Site root assignment: Site '{site.site_name}' ({site.hostname}:{site.port}, default={site.is_default_site}) -> Root Page '{site.root_page.title}' (id={site.root_page.id})"
+            )
+        )
+
+        # 7. Subpages (ServicesPage and AboutPage)
         if not ServicesPage.objects.exists():
             services_page = ServicesPage(
                 title="Services",
                 slug="services",
+                locale=locale,
                 intro="What we build for ambitious teams.",
                 live=True,
             )
             homepage.add_child(instance=services_page)
             services_page.save_revision().publish()
-            self.stdout.write(self.style.SUCCESS("Created ServicesPage subpage."))
+            self.stdout.write(self.style.SUCCESS(f"Created ServicesPage subpage (id={services_page.id})."))
 
-        # Ensure AboutPage subpage exists
         if not AboutPage.objects.exists():
             about_page = AboutPage(
                 title="About",
                 slug="about",
+                locale=locale,
                 intro="Waitaminute Digital helps founders and teams modernize their web presence, streamline recurring work, and design sharper digital experiences.",
                 live=True,
             )
             homepage.add_child(instance=about_page)
             about_page.save_revision().publish()
-            self.stdout.write(self.style.SUCCESS("Created AboutPage subpage."))
+            self.stdout.write(self.style.SUCCESS(f"Created AboutPage subpage (id={about_page.id})."))
 
-        self.stdout.write(self.style.SUCCESS("Wagtail page tree and production homepage setup complete!"))
+        self.stdout.write(self.style.SUCCESS("Wagtail homepage bootstrap complete!"))
+
 
