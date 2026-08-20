@@ -34,15 +34,9 @@ PUBLIC_SITE_URL = os.environ.get('PUBLIC_SITE_URL', 'http://127.0.0.1:8000')
 
 # CSRF Trusted Origins for HTTPS custom domains & Azure
 CSRF_TRUSTED_ORIGINS = [
-    origin.strip()
-    for origin in os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',')
-    if origin.strip()
-] or [
     "https://waitaminutedigital.com",
     "https://www.waitaminutedigital.com",
     "https://waitaminutedigitalpy-gcemdqf2g8ecgfbg.westus3-01.azurewebsites.net",
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
 ]
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
