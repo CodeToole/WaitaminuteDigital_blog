@@ -2,23 +2,25 @@
 <div class="card-grid three-up project-grid">
   {% for project in projects %}
   <article class="project-card">
-    <div class="project-thumb project-thumb-{{ forloop.counter|add:'1' }}">
-      {% if project.display_image_url %}
-        <img src="{{ project.display_image_url }}" alt="{{ project.title }} cover image">
-      {% else %}
-        <div class="project-placeholder"></div>
-      {% endif %}
-    </div>
-    <div class="project-card-body">
-      <p class="meta">{{ project.client|default:'Independent' }}</p>
-      <h3><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></h3>
-      <p>{{ project.summary }}</p>
-      <div class="tag-list">
-        {% for tag in project.tags.all|slice:':3' %}
-        <span class="tag-pill">{{ tag.name }}</span>
-        {% endfor %}
+    <a class="project-card-link" href="{{ project.get_absolute_url }}" aria-label="View {{ project.title }} project details">
+      <div class="project-thumb project-thumb-{{ forloop.counter|add:'1' }}">
+        {% if project.display_image_url %}
+          <img src="{{ project.display_image_url }}" alt="{{ project.title }} cover image">
+        {% else %}
+          <div class="project-placeholder"></div>
+        {% endif %}
       </div>
-    </div>
+      <div class="project-card-body">
+        <p class="meta">{{ project.client|default:'Independent' }}</p>
+        <h3>{{ project.title }}</h3>
+        <p>{{ project.summary }}</p>
+        <div class="tag-list">
+          {% for tag in project.tags.all|slice:':3' %}
+          <span class="tag-pill">{{ tag.name }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </a>
   </article>
   {% endfor %}
 </div>
