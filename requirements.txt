@@ -1,9 +1,6 @@
-# Verified production dependency matrix for Python 3.14 + Wagtail 7.4 LTS + Django 6.0.8
+# Django 6.1 production dependencies
 asgiref==3.12.1
-Django==6.0.8
-wagtail==7.4.2
-django-modelcluster==6.5
-django-taggit==6.1.0
+Django==6.1
 gunicorn==26.1.0
 Pillow==12.3.0
 psycopg==3.3.4

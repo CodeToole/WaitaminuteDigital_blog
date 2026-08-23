@@ -144,7 +144,6 @@ This portfolio showcases real projects delivered by Waitaminute Digital:
 ## 🗺️ Roadmap
 
 - [ ] Newsletter / email capture integration
-- [ ] Optional Wagtail CMS upgrade for visual, drag-and-edit content editing
 - [ ] Azure Communication Services email notifications on new leads
 - [ ] Microsoft Bookings link on the consultation success screen
 

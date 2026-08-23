@@ -1,22 +1,43 @@
 {% extends 'base.html' %}
-{% load wagtailcore_tags %}
 
-{% block title %}{{ page.title }} | Waitaminute Digital{% endblock %}
+{% block title %}About | Waitaminute Digital{% endblock %}
+{% block meta %}
+  {{ block.super }}
+  <meta name="description" content="Waitaminute Digital helps founders and teams modernize their web presence, streamline recurring work, and design sharper digital experiences.">
+  <meta property="og:title" content="About | Waitaminute Digital">
+  <meta property="og:description" content="Modern websites, AI workflows, and digital systems that help creators and businesses scale with clarity.">
+{% endblock %}
 
 {% block content %}
-  {% if page.body %}
-    {% for block in page.body %}
-      {% include_block block %}
-    {% endfor %}
-  {% else %}
-    <section class="section">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">About</p>
-          <h1>{{ page.title }}</h1>
-          <p>Waitaminute Digital helps founders and teams modernize their web presence, streamline recurring work, and design sharper digital experiences.</p>
-        </div>
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">About</p>
+        <h1>We build with clarity, momentum, and systems that actually hold up.</h1>
+        <p class="lead">Waitaminute Digital helps founders and teams modernize their web presence, streamline recurring work, and design sharper digital experiences.</p>
       </div>
-    </section>
-  {% endif %}
+    </div>
+  </section>
+
+  <section class="section muted">
+    <div class="container">
+      <div class="card-grid three-up">
+        <article class="info-card">
+          <span class="card-kicker">01</span>
+          <h3>Strategy first</h3>
+          <p>We start with clarity: audience, offer, conversion, and the operational mechanics that make a brand feel credible.</p>
+        </article>
+        <article class="info-card">
+          <span class="card-kicker">02</span>
+          <h3>Built for execution</h3>
+          <p>Our work connects messaging, web experience, and automation so the business has a system that can actually run.</p>
+        </article>
+        <article class="info-card">
+          <span class="card-kicker">03</span>
+          <h3>Designed to scale</h3>
+          <p>From early-stage clarity to more mature operations, we create digital foundations that support the next stage of growth.</p>
+        </article>
+      </div>
+    </div>
+  </section>
 {% endblock %}
