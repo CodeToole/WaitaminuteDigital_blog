@@ -34,8 +34,9 @@ urlpatterns = [
     path('sitemap.xml', core_views.sitemap_xml, name='sitemap_xml'),
 ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += [re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT})]
+if not settings.MEDIA_URL.startswith('http'):
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += [re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT})]
 
 handler404 = 'core.views.page_not_found'
 handler500 = 'core.views.server_error'
