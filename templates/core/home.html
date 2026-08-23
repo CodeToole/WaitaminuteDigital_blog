@@ -68,21 +68,27 @@
       <h2>Systems that bring structure to creative momentum.</h2>
     </div>
     <div class="card-grid three-up">
-      <article class="project-card">
-        <div class="project-thumb gradient-one"></div>
-        <h3>Brand architecture</h3>
-        <p>Messaging and customer journey aligned with a sharper digital story.</p>
-      </article>
-      <article class="project-card">
-        <div class="project-thumb gradient-two"></div>
-        <h3>AI workflows</h3>
-        <p>Automations that reduce admin friction without losing the human touch.</p>
-      </article>
-      <article class="project-card">
-        <div class="project-thumb gradient-three"></div>
-        <h3>Marketing systems</h3>
-        <p>Web experiences that convert attention into conversations and pipeline.</p>
-      </article>
+      {% for project in featured_projects %}
+        <article class="project-card">
+          <div class="project-thumb project-thumb-{{ forloop.counter }}">
+            {% if project.display_image_url %}
+              <img src="{{ project.display_image_url }}" alt="{{ project.title }} cover image">
+            {% else %}
+              <div class="project-placeholder"></div>
+            {% endif %}
+          </div>
+          <p class="meta">{{ project.client|default:'Independent project' }}</p>
+          <h3><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></h3>
+          <p>{{ project.summary }}</p>
+          <div class="tag-list">
+            {% for tag in project.tags.all|slice:':3' %}
+              <span class="tag-pill">{{ tag.name }}</span>
+            {% endfor %}
+          </div>
+        </article>
+      {% empty %}
+        <div class="empty-state">No projects available yet.</div>
+      {% endfor %}
     </div>
   </div>
 </section>

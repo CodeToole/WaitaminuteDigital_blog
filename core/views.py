@@ -7,7 +7,10 @@ from portfolio.models import Project
 
 
 def home(request):
-    return render(request, 'core/home.html')
+    featured_projects = Project.objects.filter(is_featured=True).prefetch_related('tags')[:3]
+    if not featured_projects:
+        featured_projects = Project.objects.all().prefetch_related('tags')[:3]
+    return render(request, 'core/home.html', {'featured_projects': featured_projects})
 
 
 def robots_txt(request):

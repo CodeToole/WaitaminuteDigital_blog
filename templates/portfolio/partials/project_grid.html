@@ -5,6 +5,8 @@
     <div class="project-thumb project-thumb-{{ forloop.counter|add:'1' }}">
       {% if project.display_image_url %}
         <img src="{{ project.display_image_url }}" alt="{{ project.title }} cover image">
+      {% else %}
+        <div class="project-placeholder"></div>
       {% endif %}
     </div>
     <div class="project-card-body">

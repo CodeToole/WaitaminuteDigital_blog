@@ -32,8 +32,10 @@ urlpatterns = [
     path('leads/', include('leads.urls')),
     path('robots.txt', core_views.robots_txt, name='robots_txt'),
     path('sitemap.xml', core_views.sitemap_xml, name='sitemap_xml'),
-    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += [re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT})]
 
 handler404 = 'core.views.page_not_found'
 handler500 = 'core.views.server_error'
