@@ -1,7 +1,7 @@
 {% extends "admin/base.html" %}
 {% load static %}
 
-{% block title %}{{ title }} | Waitaminute Digital Control Center{% endblock %}
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | Waitaminute Digital Control Center{% endblock %}
 
 {% block branding %}
 <div class="admin-branding">
@@ -19,3 +19,5 @@
   {{ block.super }}
   <link rel="icon" type="image/x-icon" href="{% static 'favicon/favicon.ico' %}">
 {% endblock %}
+
+{% block nav-global %}{% endblock %}

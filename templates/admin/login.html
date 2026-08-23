@@ -4,6 +4,7 @@
 {% block bodyclass %}login-page{% endblock %}
 {% block nav-sidebar %}{% endblock %}
 {% block breadcrumbs %}{% endblock %}
+{% block branding %}{% endblock %}
 
 {% block content %}
 <div class="login-shell">
@@ -15,6 +16,7 @@
         <small>Control Center</small>
       </div>
     </div>
+    <h2 class="login-headline">Sign in to your workspace</h2>
 
     {% if form.errors and not form.non_field_errors %}
       <p class="errornote">
