@@ -10,7 +10,16 @@ def home(request):
     featured_projects = Project.objects.filter(is_featured=True).prefetch_related('tags')[:3]
     if not featured_projects:
         featured_projects = Project.objects.all().prefetch_related('tags')[:3]
-    return render(request, 'core/home.html', {'featured_projects': featured_projects})
+
+    latest_posts = Post.published.all()[:4]
+    featured_post = latest_posts[0] if latest_posts else None
+    secondary_posts = latest_posts[1:4]
+
+    return render(request, 'core/home.html', {
+        'featured_projects': featured_projects,
+        'featured_post': featured_post,
+        'secondary_posts': secondary_posts,
+    })
 
 
 def robots_txt(request):
