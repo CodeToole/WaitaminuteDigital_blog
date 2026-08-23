@@ -21,8 +21,7 @@ class PublishedPostManager(models.Manager):
         return super().get_queryset().filter(status='published').select_related('category')
 
 
-# WAGTAIL SEAM: this plain Django blog model is intentionally the stable v1 foundation.
-# In a future Wagtail upgrade, the Post model data can be migrated into Wagtail Page types here.
+# This plain Django blog model is intentionally the stable v1 foundation.
 class Post(models.Model):
     STATUS_CHOICES = [
         ('draft', 'Draft'),

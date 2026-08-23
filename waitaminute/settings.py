@@ -32,9 +32,6 @@ ALLOWED_HOSTS = [
 ]
 PUBLIC_SITE_URL = os.environ.get('PUBLIC_SITE_URL', 'http://127.0.0.1:8000')
 SITE_ID = 1
-WAGTAIL_SITE_NAME = 'Waitaminute Digital'
-WAGTAILADMIN_BASE_URL = PUBLIC_SITE_URL
-WAGTAIL_ENABLE_UPDATE_CHECK = False
 
 # CSRF Trusted Origins for HTTPS custom domains & Azure
 CSRF_TRUSTED_ORIGINS = [
@@ -60,19 +57,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'django.contrib.sites',
-    'wagtail.contrib.forms',
-    'wagtail.contrib.redirects',
-    'wagtail.embeds',
-    'wagtail.sites',
-    'wagtail.users',
-    'wagtail.snippets',
-    'wagtail.documents',
-    'wagtail.images',
-    'wagtail.search',
-    'wagtail.admin',
-    'wagtail',
-    'modelcluster',
-    'taggit',
     'core',
     'portfolio',
     'blog',
@@ -90,7 +74,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'waitaminute.urls'

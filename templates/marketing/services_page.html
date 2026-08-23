@@ -1,22 +1,51 @@
 {% extends 'base.html' %}
-{% load wagtailcore_tags %}
 
-{% block title %}{{ page.title }} | Waitaminute Digital{% endblock %}
+{% block title %}Services | Waitaminute Digital{% endblock %}
+{% block meta %}
+  {{ block.super }}
+  <meta name="description" content="Waitaminute Digital offers modern websites, AI workflows, and website-as-a-service support for creators and growing businesses.">
+  <meta property="og:title" content="Services | Waitaminute Digital">
+  <meta property="og:description" content="Modern websites, automation, and ongoing digital support designed for creators, founders, and growing teams.">
+{% endblock %}
 
 {% block content %}
-  {% if page.body %}
-    {% for block in page.body %}
-      {% include_block block %}
-    {% endfor %}
-  {% else %}
-    <section class="section">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Services</p>
-          <h1>{{ page.title }}</h1>
-          <p>We design conversion-focused websites, automate repetitive work, and build digital systems that give teams more clarity and momentum.</p>
-        </div>
+  <section class="section service-page">
+    <div class="container">
+      <p class="eyebrow">Services</p>
+      <h1>Built for creators. Engineered for modern work.</h1>
+      <p class="lead">Every build is different, so we quote after a quick call. We design the right system for your stage, your workflow, and your growth plan.</p>
+
+      <div class="card-grid three-up service-grid">
+        <article class="info-card">
+          <span class="card-kicker">01</span>
+          <h3>Modern Work Websites</h3>
+          <p>Conversion-focused websites for founders, service businesses, and creative teams that need clarity and momentum.</p>
+        </article>
+        <article class="info-card">
+          <span class="card-kicker">02</span>
+          <h3>AI &amp; Automation</h3>
+          <p>Copilot Studio, Power Automate, and workflow design that reduce repetitive work without removing the human touch.</p>
+        </article>
+        <article class="info-card">
+          <span class="card-kicker">03</span>
+          <h3>Website-as-a-Service</h3>
+          <p>Ongoing digital support for teams that need their site to evolve with their business, launches, and campaigns.</p>
+        </article>
       </div>
-    </section>
-  {% endif %}
+    </div>
+  </section>
+
+  <section class="section consultation-block muted" id="consultation">
+    <div class="container consultation-grid">
+      <div>
+        <p class="eyebrow">Discovery call</p>
+        <h2>Tell us what you are building.</h2>
+        <p class="lead">Share a few details and we will reach out to schedule the right conversation.</p>
+      </div>
+
+      <div id="lead-form-shell">
+        {% include 'leads/partials/consultation_form.html' %}
+      </div>
+    </div>
+  </section>
 {% endblock %}
