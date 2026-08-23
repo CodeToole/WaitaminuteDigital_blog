@@ -1,5 +1,5 @@
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from .models import Post
 
@@ -24,5 +24,14 @@ def post_list(request):
 
 
 def post_detail(request, slug):
-    post = Post.published.get(slug=slug)
-    return render(request, 'blog/post_detail.html', {'post': post})
+    post = get_object_or_404(Post.published, slug=slug)
+    post_url = request.build_absolute_uri(post.get_absolute_url())
+    share_urls = post.get_share_urls(request)
+    share_image_url = post.get_share_image_url(request)
+    return render(request, 'blog/post_detail.html', {
+        'post': post,
+        'post_url': post_url,
+        'share_urls': share_urls,
+        'share_image_url': share_image_url,
+    })
+

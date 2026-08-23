@@ -1,11 +1,30 @@
 {% extends 'base.html' %}
+{% load static blog_tags %}
 
 {% block title %}{{ post.title }} | Waitaminute Digital{% endblock %}
 {% block meta %}
-  {{ block.super }}
   <meta name="description" content="{{ post.excerpt|striptags|truncatechars:160 }}">
+
+  <!-- Open Graph / Facebook / LinkedIn / Discord / Teams / Slack -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Waitaminute Digital">
   <meta property="og:title" content="{{ post.title }} | Waitaminute Digital">
   <meta property="og:description" content="{{ post.excerpt|striptags|truncatechars:160 }}">
+  <meta property="og:url" content="{{ post_url|default:request.build_absolute_uri }}">
+  <meta property="og:image" content="{{ share_image_url|default:post|share_image_url:request }}">
+  {% if post.published_at %}
+  <meta property="article:published_time" content="{{ post.published_at|date:'c' }}">
+  {% endif %}
+  {% if post.category %}
+  <meta property="article:section" content="{{ post.category.name }}">
+  {% endif %}
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@WaitaminuteDig">
+  <meta name="twitter:title" content="{{ post.title }} | Waitaminute Digital">
+  <meta name="twitter:description" content="{{ post.excerpt|striptags|truncatechars:160 }}">
+  <meta name="twitter:image" content="{{ share_image_url|default:post|share_image_url:request }}">
 {% endblock %}
 
 {% block content %}
@@ -28,11 +47,20 @@
 
       <p class="eyebrow">{{ post.category.name|default:'Insight' }}</p>
       <h1>{{ post.title }}</h1>
-      <p class="article-meta">{{ post.published_at|date:'F j, Y' }}</p>
+      <div class="article-meta-row">
+        <p class="article-meta">{{ post.published_at|date:'F j, Y' }}</p>
+        {% include 'blog/partials/share_buttons.html' %}
+      </div>
       <div class="article-body">
         {{ post.body|linebreaks }}
+      </div>
+
+      <div class="article-share-footer">
+        <h3 class="share-footer-heading">Share this article</h3>
+        {% include 'blog/partials/share_buttons.html' %}
       </div>
     </article>
   </div>
 </section>
 {% endblock %}
+
