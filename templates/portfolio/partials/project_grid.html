@@ -1,7 +1,7 @@
 {% if projects %}
 <div class="card-grid three-up project-grid">
   {% for project in projects %}
-  <article class="project-card">
+  <article class="project-card portfolio-card">
     <a class="project-card-link" href="{{ project.get_absolute_url }}" aria-label="View {{ project.title }} project details">
       <div class="project-thumb project-thumb-{{ forloop.counter|add:'1' }}">
         {% if project.display_image_url %}

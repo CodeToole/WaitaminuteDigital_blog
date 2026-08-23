@@ -61,7 +61,7 @@
   </div>
 </section>
 
-<section class="section muted" id="portfolio">
+<section class="section muted featured-work" id="portfolio">
   <div class="container">
     <div class="section-heading">
       <p class="eyebrow">Featured work</p>
@@ -69,7 +69,7 @@
     </div>
     <div class="card-grid three-up">
       {% for project in featured_projects %}
-        <article class="project-card">
+        <article class="project-card work-card">
           <a class="project-card-link" href="{{ project.get_absolute_url }}" aria-label="View {{ project.title }} project details">
             <div class="project-thumb project-thumb-{{ forloop.counter }}">
               {% if project.display_image_url %}
