@@ -56,3 +56,26 @@ class Project(models.Model):
         if self.youtube_thumbnail_url:
             return self.youtube_thumbnail_url
         return None
+
+    def get_share_image_url(self, request=None):
+        """
+        Return an absolute URL for Open Graph and Twitter card image previews.
+        Falls back to the site logo/banner if no cover image or video thumbnail is set.
+        """
+        image_url = self.display_image_url
+        if not image_url:
+            fallback = '/static/img/logo/wmd-logo-full-onblack.png'
+            return request.build_absolute_uri(fallback) if request else fallback
+
+        if image_url.startswith(('http://', 'https://')):
+            return image_url
+
+        if request:
+            return request.build_absolute_uri(image_url)
+        return image_url
+
+    def get_share_urls(self, request=None):
+        """Return sharing URLs for Facebook, X (Twitter), LinkedIn, etc."""
+        from blog.utils import get_share_urls
+        url = request.build_absolute_uri(self.get_absolute_url()) if request else self.get_absolute_url()
+        return get_share_urls(url=url, title=self.title, summary=self.summary)
