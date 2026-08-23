@@ -17,13 +17,20 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth.admin import GroupAdmin, UserAdmin
+from django.contrib.auth.models import Group, User
+from django.contrib.sites.admin import SiteAdmin
+from django.contrib.sites.models import Site
 from django.urls import include, path, re_path
 from django.views.static import serve
 
+from blog.admin import CategoryAdmin, PostAdmin
 from blog.models import Category, Post
 from core import views as core_views
+from leads.admin import LeadAdmin
 from leads.models import Lead
-from portfolio.models import Project
+from portfolio.admin import ProjectAdmin, TagAdmin
+from portfolio.models import Project, Tag
 
 
 class WMDAdminSite(admin.AdminSite):
@@ -46,6 +53,14 @@ class WMDAdminSite(admin.AdminSite):
 
 
 admin_site = WMDAdminSite(name='admin')
+admin_site.register(User, UserAdmin)
+admin_site.register(Group, GroupAdmin)
+admin_site.register(Site, SiteAdmin)
+admin_site.register(Category, CategoryAdmin)
+admin_site.register(Post, PostAdmin)
+admin_site.register(Lead, LeadAdmin)
+admin_site.register(Project, ProjectAdmin)
+admin_site.register(Tag, TagAdmin)
 
 urlpatterns = [
     path('admin/', admin_site.urls),
