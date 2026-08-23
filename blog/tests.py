@@ -177,7 +177,8 @@ class PostDetailSocialShareViewTests(TestCase):
         self.assertContains(response, 'Copy Link')
 
         # Check share URLs contain encoded link to the post
-        self.assertContains(response, 'facebook.com%2Fsharer%2Fsharer.php')
-        self.assertContains(response, 'x.com%2Fintent%2Ftweet')
-        self.assertContains(response, 'linkedin.com%2Fsharing%2Fshare-offsite')
+        self.assertContains(response, 'facebook.com/sharer/sharer.php')
+        self.assertContains(response, 'x.com/intent/tweet')
+        self.assertContains(response, 'linkedin.com/sharing/share-offsite')
+        self.assertContains(response, self.post.slug)
 

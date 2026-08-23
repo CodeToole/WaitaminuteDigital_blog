@@ -20,7 +20,7 @@ def _resolve_post_url(post_or_url, request=None):
 
 
 def _resolve_title(post_or_url):
-    if hasattr(post_or_url, 'title'):
+    if hasattr(post_or_url, 'title') and not callable(post_or_url.title):
         return post_or_url.title
     return ""
 

@@ -3,7 +3,7 @@
   <span class="share-bar-label">Share:</span>
   <div class="share-bar-buttons">
     <!-- Facebook -->
-    <a href="{{ share_urls.facebook|default:post|facebook_share_url:request }}"
+    <a href="{% firstof share_urls.facebook post|facebook_share_url:request %}"
        class="share-btn share-btn-facebook"
        target="_blank"
        rel="noopener noreferrer"
@@ -16,7 +16,7 @@
     </a>
 
     <!-- X (Twitter) -->
-    <a href="{{ share_urls.twitter|default:share_urls.x|default:post|x_share_url:request }}"
+    <a href="{% firstof share_urls.x share_urls.twitter post|x_share_url:request %}"
        class="share-btn share-btn-x"
        target="_blank"
        rel="noopener noreferrer"
@@ -29,7 +29,7 @@
     </a>
 
     <!-- LinkedIn -->
-    <a href="{{ share_urls.linkedin|default:post|linkedin_share_url:request }}"
+    <a href="{% firstof share_urls.linkedin post|linkedin_share_url:request %}"
        class="share-btn share-btn-linkedin"
        target="_blank"
        rel="noopener noreferrer"

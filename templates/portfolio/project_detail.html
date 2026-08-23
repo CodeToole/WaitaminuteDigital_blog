@@ -32,7 +32,7 @@
       <h1>{{ project.title }}</h1>
       <p class="lead">{{ project.summary }}</p>
       <div class="article-meta-row" style="margin-top: 1.5rem; justify-content: flex-start;">
-        {% include 'blog/partials/share_buttons.html' with post=project %}
+        {% share_buttons post=project %}
       </div>
     </div>
 
@@ -83,7 +83,7 @@
 
     <div class="article-share-footer" style="margin-top: 4rem;">
       <h3 class="share-footer-heading">Share this project</h3>
-      {% include 'blog/partials/share_buttons.html' with post=project %}
+      {% share_buttons post=project %}
     </div>
   </div>
 </section>
