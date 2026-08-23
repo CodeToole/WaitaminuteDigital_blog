@@ -49,29 +49,15 @@ body,
   text-decoration: none;
 }
 
-.admin-branding img {
-  width: 36px;
-  height: 36px;
+.admin-brand-logo {
   display: block;
+  width: min(360px, 52vw);
+  height: auto;
+  filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.16));
 }
 
 .admin-brand-copy {
-  display: grid;
-  line-height: 1.1;
-}
-
-.admin-brand-copy span {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  font-size: 1rem;
-}
-
-.admin-brand-copy small {
-  color: var(--cyan);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  display: none;
 }
 
 .admin-dashboard {
@@ -373,31 +359,23 @@ select:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
   margin-bottom: 24px;
-  text-align: left;
+  text-align: center;
 }
 
-.login-branding img {
-  width: 52px;
-  height: 52px;
+.login-brand-logo {
+  display: block;
+  width: min(100%, 360px);
+  height: auto;
+  filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.12));
 }
 
 .login-brand-name {
-  display: block;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  color: var(--text);
-  font-size: 1.3rem;
+  display: none;
 }
 
 .login-branding small {
-  display: block;
-  color: var(--cyan);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
+  display: none;
 }
 
 .login-card .form-row {
