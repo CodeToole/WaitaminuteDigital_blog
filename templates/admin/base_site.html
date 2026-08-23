@@ -1,16 +1,12 @@
 {% extends "admin/base.html" %}
 {% load static %}
 
-{% block title %}{{ title }} | Waitaminute Digital Control Center{% endblock %}
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | Waitaminute Digital Control Center{% endblock %}
 
 {% block branding %}
 <div class="admin-branding">
-  <a href="{% url 'admin:index' %}" class="admin-brand-link">
-    <img src="{% static 'img/logo/wmd-logomark.svg' %}" alt="Waitaminute Digital logo" width="36" height="36">
-    <div class="admin-brand-copy">
-      <span>Waitaminute Digital</span>
-      <small>Control Center</small>
-    </div>
+  <a href="{% url 'admin:index' %}" class="admin-brand-link" aria-label="Waitaminute Digital Control Center">
+    <img src="{% static 'img/logo/wmd-logo-full-onblack.png' %}" alt="Waitaminute Digital logo" class="admin-brand-logo">
   </a>
 </div>
 {% endblock %}
@@ -19,3 +15,5 @@
   {{ block.super }}
   <link rel="icon" type="image/x-icon" href="{% static 'favicon/favicon.ico' %}">
 {% endblock %}
+
+{% block nav-global %}{% endblock %}

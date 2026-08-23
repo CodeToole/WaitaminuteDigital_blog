@@ -4,17 +4,15 @@
 {% block bodyclass %}login-page{% endblock %}
 {% block nav-sidebar %}{% endblock %}
 {% block breadcrumbs %}{% endblock %}
+{% block branding %}{% endblock %}
 
 {% block content %}
 <div class="login-shell">
   <div class="login-card">
     <div class="login-branding">
-      <img src="{% static 'img/logo/wmd-logomark.svg' %}" alt="Waitaminute Digital logo">
-      <div>
-        <span class="login-brand-name">Waitaminute Digital</span>
-        <small>Control Center</small>
-      </div>
+      <img src="{% static 'img/logo/wmd-logo-full-onblack.png' %}" alt="Waitaminute Digital logo" class="login-brand-logo">
     </div>
+    <h2 class="login-headline">Sign in to your workspace</h2>
 
     {% if form.errors and not form.non_field_errors %}
       <p class="errornote">

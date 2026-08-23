@@ -20,10 +20,35 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.static import serve
 
+from blog.models import Category, Post
 from core import views as core_views
+from leads.models import Lead
+from portfolio.models import Project
+
+
+class WMDAdminSite(admin.AdminSite):
+    site_title = 'Waitaminute Digital Control Center'
+    site_header = 'Waitaminute Digital Control Center'
+    index_title = 'Dashboard'
+    index_template = 'admin/index.html'
+
+    def index(self, request, extra_context=None):
+        if extra_context is None:
+            extra_context = {}
+
+        extra_context.update({
+            'portfolio_count': Project.objects.count(),
+            'blog_post_count': Post.objects.count(),
+            'lead_count': Lead.objects.count(),
+            'category_count': Category.objects.count(),
+        })
+        return super().index(request, extra_context=extra_context)
+
+
+admin_site = WMDAdminSite(name='admin')
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin_site.urls),
     path('', include('core.urls')),
     path('about/', include('marketing.urls')),
     path('services/', include('services.urls')),
