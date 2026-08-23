@@ -170,16 +170,40 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
 
-# WhiteNoise static files compression (for later Azure deployment)
-STORAGES = {
-    'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
-    'staticfiles': {
-        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
-    },
-}
+USE_AZURE_BLOB = str(os.environ.get('USE_AZURE_BLOB', 'False')).strip().lower() in {'1', 'true', 'yes', 'on'}
+AZURE_ACCOUNT_NAME = os.environ.get('AZURE_ACCOUNT_NAME', '')
+AZURE_ACCOUNT_KEY = os.environ.get('AZURE_ACCOUNT_KEY', '')
+AZURE_MEDIA_CONTAINER = os.environ.get('AZURE_MEDIA_CONTAINER', 'media')
+AZURE_CUSTOM_DOMAIN = os.environ.get('AZURE_CUSTOM_DOMAIN', '').rstrip('/')
+
+if USE_AZURE_BLOB and AZURE_ACCOUNT_NAME and AZURE_ACCOUNT_KEY:
+    MEDIA_URL = f"https://{AZURE_CUSTOM_DOMAIN}/" if AZURE_CUSTOM_DOMAIN else f"https://{AZURE_ACCOUNT_NAME}.blob.core.windows.net/{AZURE_MEDIA_CONTAINER}/"
+    MEDIA_ROOT = BASE_DIR / 'media'
+    STORAGES = {
+        'default': {
+            'BACKEND': 'storages.backends.azure_storage.AzureStorage',
+            'OPTIONS': {
+                'account_name': AZURE_ACCOUNT_NAME,
+                'account_key': AZURE_ACCOUNT_KEY,
+                'azure_container': AZURE_MEDIA_CONTAINER,
+                'overwrite_files': False,
+                'location': 'media',
+            },
+        },
+        'staticfiles': {
+            'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+        },
+    }
+else:
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
+    STORAGES = {
+        'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
+        'staticfiles': {
+            'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+        },
+    }
 
 
 # Email

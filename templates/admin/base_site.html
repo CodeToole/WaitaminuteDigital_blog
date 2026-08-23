@@ -1,0 +1,21 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | Waitaminute Digital Control Center{% endblock %}
+
+{% block branding %}
+<div class="admin-branding">
+  <a href="{% url 'admin:index' %}" class="admin-brand-link">
+    <img src="{% static 'img/logo/wmd-logomark.svg' %}" alt="Waitaminute Digital logo" width="36" height="36">
+    <div class="admin-brand-copy">
+      <span>Waitaminute Digital</span>
+      <small>Control Center</small>
+    </div>
+  </a>
+</div>
+{% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <link rel="icon" type="image/x-icon" href="{% static 'favicon/favicon.ico' %}">
+{% endblock %}
