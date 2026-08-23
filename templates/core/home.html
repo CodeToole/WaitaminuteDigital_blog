@@ -99,23 +99,64 @@
 
 <section class="section" id="blog">
   <div class="container">
-    <div class="section-heading">
-      <p class="eyebrow">Insights</p>
-      <h2>Practical perspectives for modern operators.</h2>
+    <div class="section-heading insights-heading">
+      <div>
+        <p class="eyebrow">Insights</p>
+        <h2>Practical perspectives for modern operators.</h2>
+      </div>
+      <a class="button button-secondary insights-view-all" href="{% url 'blog' %}">View All Articles</a>
     </div>
-    <div class="card-grid three-up">
-      <article class="post-card">
-        <p class="meta">Strategy</p>
-        <h3>Designing a website that acts like a sales system</h3>
-      </article>
-      <article class="post-card">
-        <p class="meta">AI</p>
-        <h3>3 signs your team is ready for workflow automation</h3>
-      </article>
-      <article class="post-card">
-        <p class="meta">Operations</p>
-        <h3>What a modern work stack should feel like</h3>
-      </article>
+
+    {% if featured_post or secondary_posts %}
+      <div class="insights-layout">
+
+        {% if featured_post %}
+        <a class="insight-featured-link" href="{{ featured_post.get_absolute_url }}" aria-label="Read {{ featured_post.title }}">
+          <article class="insight-card insight-card-featured post-card">
+            {% if featured_post.display_image_url %}
+            <div class="insight-cover">
+              <img src="{{ featured_post.display_image_url }}" alt="{{ featured_post.title }} cover image">
+            </div>
+            {% endif %}
+            <div class="insight-body">
+              <p class="meta">{{ featured_post.category.name|default:'Insight' }}</p>
+              <h3>{{ featured_post.title }}</h3>
+              <p class="insight-excerpt">{{ featured_post.excerpt|truncatewords:30 }}</p>
+              <p class="insight-date">{{ featured_post.published_at|date:'F j, Y' }}</p>
+            </div>
+          </article>
+        </a>
+        {% endif %}
+
+        {% if secondary_posts %}
+        <div class="insights-secondary">
+          {% for post in secondary_posts %}
+          <a class="insight-secondary-link" href="{{ post.get_absolute_url }}" aria-label="Read {{ post.title }}">
+            <article class="insight-card insight-card-secondary post-card">
+              {% if post.display_image_url %}
+              <div class="insight-thumb">
+                <img src="{{ post.display_image_url }}" alt="{{ post.title }} cover image">
+              </div>
+              {% endif %}
+              <div class="insight-body">
+                <p class="meta">{{ post.category.name|default:'Insight' }}</p>
+                <h3>{{ post.title }}</h3>
+                <p class="insight-excerpt">{{ post.excerpt|truncatewords:18 }}</p>
+                <p class="insight-date">{{ post.published_at|date:'F j, Y' }}</p>
+              </div>
+            </article>
+          </a>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+      </div>
+    {% else %}
+      <div class="empty-state">Articles coming soon — check back shortly.</div>
+    {% endif %}
+
+    <div class="insights-footer-cta">
+      <a class="button button-secondary" href="{% url 'blog' %}">View All Articles</a>
     </div>
   </div>
 </section>
