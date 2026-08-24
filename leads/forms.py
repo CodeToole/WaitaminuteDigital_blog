@@ -31,6 +31,7 @@ class LeadForm(forms.Form):
     )
     message = forms.CharField(
         label='Project Details',
+        max_length=3000,
         widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Tell us what you are building.'}),
     )
     website = forms.CharField(label='Website', required=False, widget=forms.HiddenInput(attrs={'class': 'honeypot'}))

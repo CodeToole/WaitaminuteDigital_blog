@@ -151,3 +151,51 @@ class ProjectDetailSocialShareViewTests(TestCase):
         self.assertContains(response, 'linkedin.com/sharing/share-offsite')
         self.assertContains(response, self.project_without_cover.slug)
 
+
+
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.exceptions import ValidationError
+
+import io
+from PIL import Image
+
+def _create_portfolio_test_image(format='PNG', size=(10, 10), color=(0, 255, 0)):
+    buf = io.BytesIO()
+    img = Image.new('RGB', size, color=color)
+    img.save(buf, format=format)
+    buf.seek(0)
+    return buf.getvalue()
+
+class ProjectImageValidationTests(TestCase):
+    def test_valid_png_image(self):
+        content = _create_portfolio_test_image('PNG')
+        uploaded = SimpleUploadedFile("valid.png", content, content_type="image/png")
+        project = Project(title="Valid PNG", slug="valid-png", summary="S", body="B", cover_image=uploaded)
+        project.full_clean()
+
+    def test_valid_jpeg_image(self):
+        content = _create_portfolio_test_image('JPEG')
+        uploaded = SimpleUploadedFile("valid.jpg", content, content_type="image/jpeg")
+        project = Project(title="Valid JPG", slug="valid-jpg", summary="S", body="B", cover_image=uploaded)
+        project.full_clean()
+
+    def test_fake_bytes_named_jpg_raises_validation_error(self):
+        fake_file = SimpleUploadedFile("fake.jpg", b"not an image", content_type="image/jpeg")
+        project = Project(title="Fake JPG", slug="fake-jpg", summary="S", body="B", cover_image=fake_file)
+        with self.assertRaises(ValidationError) as ctx:
+            project.full_clean()
+        self.assertIn("Invalid image file content", str(ctx.exception))
+
+    def test_invalid_image_extension_raises_validation_error(self):
+        invalid_file = SimpleUploadedFile("executable.exe", b"binary", content_type="application/octet-stream")
+        project = Project(title="Test Project", slug="test-project", summary="Summary", body="Content", cover_image=invalid_file)
+        with self.assertRaises(ValidationError) as ctx:
+            project.full_clean()
+        self.assertIn("Unsupported image file extension", str(ctx.exception))
+
+    def test_oversized_image_raises_validation_error(self):
+        large_file = SimpleUploadedFile("huge_banner.png", b"0" * (10 * 1024 * 1024 + 1), content_type="image/png")
+        project = Project(title="Test Project Large Image", slug="test-project-large-image", summary="Summary", body="Content", cover_image=large_file)
+        with self.assertRaises(ValidationError) as ctx:
+            project.full_clean()
+        self.assertIn("File size exceeds maximum allowed limit", str(ctx.exception))

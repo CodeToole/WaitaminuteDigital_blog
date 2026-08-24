@@ -44,6 +44,12 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
+_use_sqlite = str(os.environ.get('USE_SQLITE', 'False')).strip().lower() in {'1', 'true', 'yes', 'on'}
+_wn_env = os.environ.get('WHITENOISE_MANIFEST_STRICT')
+if _wn_env is not None:
+    WHITENOISE_MANIFEST_STRICT = str(_wn_env).strip().lower() in {'1', 'true', 'yes', 'on'}
+else:
+    WHITENOISE_MANIFEST_STRICT = not _use_sqlite
 
 
 # Application definition
@@ -192,7 +198,7 @@ if USE_AZURE_BLOB and AZURE_ACCOUNT_NAME and AZURE_ACCOUNT_KEY:
             },
         },
         'staticfiles': {
-            'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+            'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage' if WHITENOISE_MANIFEST_STRICT else 'whitenoise.storage.CompressedStaticFilesStorage',
         },
     }
 else:
@@ -201,7 +207,7 @@ else:
     STORAGES = {
         'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
         'staticfiles': {
-            'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+            'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage' if WHITENOISE_MANIFEST_STRICT else 'whitenoise.storage.CompressedStaticFilesStorage',
         },
     }
 
