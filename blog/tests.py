@@ -182,3 +182,34 @@ class PostDetailSocialShareViewTests(TestCase):
         self.assertContains(response, 'linkedin.com/sharing/share-offsite')
         self.assertContains(response, self.post.slug)
 
+
+
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.exceptions import ValidationError
+
+class PostImageValidationTests(TestCase):
+    def test_invalid_image_extension_raises_validation_error(self):
+        invalid_file = SimpleUploadedFile("script.py", b"print('hello')", content_type="text/x-python")
+        post = Post(
+            title="Test Post",
+            slug="test-post",
+            excerpt="Summary",
+            body="Content",
+            cover_image=invalid_file,
+        )
+        with self.assertRaises(ValidationError) as ctx:
+            post.full_clean()
+        self.assertIn("Unsupported image file extension", str(ctx.exception))
+
+    def test_oversized_image_raises_validation_error(self):
+        large_file = SimpleUploadedFile("huge_photo.jpg", b"0" * (10 * 1024 * 1024 + 1), content_type="image/jpeg")
+        post = Post(
+            title="Test Post Large Image",
+            slug="test-post-large-image",
+            excerpt="Summary",
+            body="Content",
+            cover_image=large_file,
+        )
+        with self.assertRaises(ValidationError) as ctx:
+            post.full_clean()
+        self.assertIn("File size exceeds maximum allowed limit", str(ctx.exception))

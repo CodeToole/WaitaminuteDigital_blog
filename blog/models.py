@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-from core.utils import extract_youtube_id, get_youtube_embed_url, get_youtube_thumbnail_url
+from core.utils import extract_youtube_id, get_youtube_embed_url, get_youtube_thumbnail_url, validate_image_file
 
 
 class Category(models.Model):
@@ -32,7 +32,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=240, unique=True)
     excerpt = models.TextField(help_text='Short summary shown in card previews.')
     body = models.TextField()
-    cover_image = models.ImageField(upload_to='blog/', blank=True, null=True)
+    cover_image = models.ImageField(upload_to='blog/', blank=True, null=True, validators=[validate_image_file])
     youtube_url = models.URLField(blank=True, help_text='Paste a YouTube video URL (e.g. https://youtu.be/... or https://youtube.com/watch?v=...).')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='posts')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')

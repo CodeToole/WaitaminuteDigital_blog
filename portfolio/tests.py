@@ -151,3 +151,34 @@ class ProjectDetailSocialShareViewTests(TestCase):
         self.assertContains(response, 'linkedin.com/sharing/share-offsite')
         self.assertContains(response, self.project_without_cover.slug)
 
+
+
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.exceptions import ValidationError
+
+class ProjectImageValidationTests(TestCase):
+    def test_invalid_image_extension_raises_validation_error(self):
+        invalid_file = SimpleUploadedFile("executable.exe", b"binary", content_type="application/octet-stream")
+        project = Project(
+            title="Test Project",
+            slug="test-project",
+            summary="Summary",
+            body="Content",
+            cover_image=invalid_file,
+        )
+        with self.assertRaises(ValidationError) as ctx:
+            project.full_clean()
+        self.assertIn("Unsupported image file extension", str(ctx.exception))
+
+    def test_oversized_image_raises_validation_error(self):
+        large_file = SimpleUploadedFile("huge_banner.png", b"0" * (10 * 1024 * 1024 + 1), content_type="image/png")
+        project = Project(
+            title="Test Project Large Image",
+            slug="test-project-large-image",
+            summary="Summary",
+            body="Content",
+            cover_image=large_file,
+        )
+        with self.assertRaises(ValidationError) as ctx:
+            project.full_clean()
+        self.assertIn("File size exceeds maximum allowed limit", str(ctx.exception))
