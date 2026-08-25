@@ -697,6 +697,158 @@ input[type="hidden"] {
   display: none;
 }
 
+/* ── IGN-Style Portfolio Carousel ── */
+.portfolio-track {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  width: min(var(--wmd-max-width), calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.ign-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(31, 35, 46, 0.9);
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.ign-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 0 1px rgba(0, 229, 255, 0.2),
+    0 12px 40px rgba(0, 0, 0, 0.45),
+    0 0 28px rgba(0, 229, 255, 0.1);
+}
+
+.ign-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.ign-card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.18), rgba(139, 92, 246, 0.14));
+}
+
+.ign-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.ign-card:hover .ign-card-media img {
+  transform: scale(1.05);
+}
+
+.ign-card-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.28), rgba(139, 92, 246, 0.2));
+}
+
+.ign-card-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.6) 40%, transparent 70%);
+  pointer-events: none;
+}
+
+.ign-card-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  background: rgba(0, 229, 255, 0.12);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  color: var(--wmd-cyan);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  backdrop-filter: blur(6px);
+}
+
+.ign-card-title {
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin: 0 0 8px;
+  color: var(--wmd-white);
+}
+
+.ign-card-overlay .tag-list {
+  margin-top: 4px;
+}
+
+.ign-card-overlay .tag-pill {
+  font-size: 0.68rem;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* ── Mobile carousel: peeking cards ── */
+@media (max-width: 900px) {
+  .portfolio-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;          /* Firefox */
+    gap: 16px;
+    width: 100%;
+    padding: 0 16px 8px;
+  }
+
+  .portfolio-track::-webkit-scrollbar {
+    display: none;                  /* Chrome / Safari */
+  }
+
+  .ign-card {
+    flex: 0 0 84%;
+    max-width: 340px;
+    scroll-snap-align: start;
+  }
+
+  .ign-card:last-child {
+    /* Extra right padding so the last card can scroll flush */
+    margin-right: 16px;
+  }
+
+  .ign-card-media {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+@media (max-width: 480px) {
+  .ign-card {
+    flex: 0 0 88%;
+    max-width: 320px;
+  }
+
+  .ign-card-overlay {
+    padding: 16px;
+  }
+}
+/* ── End IGN carousel ── */
+
 @media (max-width: 900px) {
   .insights-layout {
     grid-template-columns: 1fr;

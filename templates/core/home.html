@@ -67,33 +67,32 @@
       <p class="eyebrow">Featured work</p>
       <h2>Systems that bring structure to creative momentum.</h2>
     </div>
-    <div class="card-grid three-up">
-      {% for project in featured_projects %}
-        <article class="project-card work-card">
-          <a class="project-card-link" href="{{ project.get_absolute_url }}" aria-label="View {{ project.title }} project details">
-            <div class="project-thumb project-thumb-{{ forloop.counter }}">
-              {% if project.display_image_url %}
-                <img src="{{ project.display_image_url }}" alt="{{ project.title }} cover image">
-              {% else %}
-                <div class="project-placeholder"></div>
-              {% endif %}
-            </div>
-            <div class="project-card-body">
-              <p class="meta">{{ project.client|default:'Independent project' }}</p>
-              <h3>{{ project.title }}</h3>
-              <p>{{ project.summary }}</p>
+  </div>
+  <div class="portfolio-track">
+    {% for project in featured_projects %}
+      <article class="ign-card">
+        <a class="ign-card-link" href="{{ project.get_absolute_url }}" aria-label="View {{ project.title }} project details">
+          <div class="ign-card-media">
+            {% if project.display_image_url %}
+              <img src="{{ project.display_image_url }}" alt="{{ project.title }} cover image" loading="lazy">
+            {% else %}
+              <div class="ign-card-placeholder"></div>
+            {% endif %}
+            <div class="ign-card-overlay">
+              <span class="ign-card-badge">{{ project.client|default:'Independent project' }}</span>
+              <h3 class="ign-card-title">{{ project.title }}</h3>
               <div class="tag-list">
                 {% for tag in project.tags.all|slice:':3' %}
                   <span class="tag-pill">{{ tag.name }}</span>
                 {% endfor %}
               </div>
             </div>
-          </a>
-        </article>
-      {% empty %}
-        <div class="empty-state">No projects available yet.</div>
-      {% endfor %}
-    </div>
+          </div>
+        </a>
+      </article>
+    {% empty %}
+      <div class="empty-state" style="flex: 1 0 100%;">No projects available yet.</div>
+    {% endfor %}
   </div>
 </section>
 
