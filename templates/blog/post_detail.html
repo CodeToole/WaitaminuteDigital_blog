@@ -52,7 +52,7 @@
         {% include 'blog/partials/share_buttons.html' %}
       </div>
       <div class="article-body">
-        {{ post.body|linebreaks }}
+        {{ post.body|linebreaks|urlize }}
       </div>
 
       <div class="article-share-footer">
