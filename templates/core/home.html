@@ -2,10 +2,12 @@
 
 {% block title %}Waitaminute Digital | Built for creators{% endblock %}
 {% block meta %}
-  {{ block.super }}
-  <meta name="description" content="Waitaminute Digital designs modern websites, automation workflows, and digital systems for creators, founders, and ambitious teams.">
-  <meta property="og:title" content="Waitaminute Digital | Built for creators">
-  <meta property="og:description" content="Modern websites, AI workflows, and digital systems that help creators and businesses scale with clarity.">
+{{ block.super }}
+<meta name="description"
+  content="Waitaminute Digital designs modern websites, automation workflows, and digital systems for creators, founders, and ambitious teams.">
+<meta property="og:title" content="Waitaminute Digital | Built for creators">
+<meta property="og:description"
+  content="Modern websites, AI workflows, and digital systems that help creators and businesses scale with clarity.">
 {% endblock %}
 
 {% block content %}
@@ -14,7 +16,8 @@
     <div class="hero-copy">
       <p class="eyebrow">Built for creators. Engineered for modern work.</p>
       <h1>We architect modern work systems that turn effort into momentum.</h1>
-      <p class="lead">Waitaminute Digital helps founders and teams modernize their web presence, automate operations, and turn customer interest into qualified follow-up.</p>
+      <p class="lead">Waitaminute Digital helps founders and teams modernize their web presence, automate operations,
+        and turn customer interest into qualified follow-up.</p>
       <div class="cta-row">
         <a class="button button-primary" href="{% url 'services' %}#consultation">Book a Discovery Call</a>
         <a class="button button-secondary" href="{% url 'services' %}">Explore services</a>
@@ -70,28 +73,29 @@
   </div>
   <div class="portfolio-track">
     {% for project in featured_projects %}
-      <article class="ign-card">
-        <a class="ign-card-link" href="{{ project.get_absolute_url }}" aria-label="View {{ project.title }} project details">
-          <div class="ign-card-media">
-            {% if project.display_image_url %}
-              <img src="{{ project.display_image_url }}" alt="{{ project.title }} cover image" loading="lazy">
-            {% else %}
-              <div class="ign-card-placeholder"></div>
-            {% endif %}
-            <div class="ign-card-overlay">
-              <span class="ign-card-badge">{{ project.client|default:'Independent project' }}</span>
-              <h3 class="ign-card-title">{{ project.title }}</h3>
-              <div class="tag-list">
-                {% for tag in project.tags.all|slice:':3' %}
-                  <span class="tag-pill">{{ tag.name }}</span>
-                {% endfor %}
-              </div>
+    <article class="ign-card">
+      <a class="ign-card-link" href="{{ project.get_absolute_url }}"
+        aria-label="View {{ project.title }} project details">
+        <div class="ign-card-media">
+          {% if project.display_image_url %}
+          <img src="{{ project.display_image_url }}" alt="{{ project.title }} cover image" loading="lazy">
+          {% else %}
+          <div class="ign-card-placeholder"></div>
+          {% endif %}
+          <div class="ign-card-overlay">
+            <span class="ign-card-badge">{{ project.client|default:'Independent project' }}</span>
+            <h3 class="ign-card-title">{{ project.title }}</h3>
+            <div class="tag-list">
+              {% for tag in project.tags.all|slice:':3' %}
+              <span class="tag-pill">{{ tag.name }}</span>
+              {% endfor %}
             </div>
           </div>
-        </a>
-      </article>
+        </div>
+      </a>
+    </article>
     {% empty %}
-      <div class="empty-state" style="flex: 1 0 100%;">No projects available yet.</div>
+    <div class="empty-state" style="flex: 1 0 100%;">No projects available yet.</div>
     {% endfor %}
   </div>
 </section>
@@ -107,51 +111,52 @@
     </div>
 
     {% if featured_post or secondary_posts %}
-      <div class="insights-layout">
+    <div class="insights-layout">
 
-        {% if featured_post %}
-        <a class="insight-featured-link" href="{{ featured_post.get_absolute_url }}" aria-label="Read {{ featured_post.title }}">
-          <article class="insight-card insight-card-featured post-card">
-            {% if featured_post.display_image_url %}
-            <div class="insight-cover">
-              <img src="{{ featured_post.display_image_url }}" alt="{{ featured_post.title }} cover image">
+      {% if featured_post %}
+      <a class="insight-featured-link" href="{{ featured_post.get_absolute_url }}"
+        aria-label="Read {{ featured_post.title }}">
+        <article class="insight-card insight-card-featured post-card">
+          {% if featured_post.display_image_url %}
+          <div class="insight-cover">
+            <img src="{{ featured_post.display_image_url }}" alt="{{ featured_post.title }} cover image">
+          </div>
+          {% endif %}
+          <div class="insight-body">
+            <p class="meta">{{ featured_post.category.name|default:'Insight' }}</p>
+            <h3>{{ featured_post.title }}</h3>
+            <p class="insight-excerpt">{{ featured_post.excerpt|truncatewords:30 }}</p>
+            <p class="insight-date">{{ featured_post.published_at|date:'F j, Y' }}</p>
+          </div>
+        </article>
+      </a>
+      {% endif %}
+
+      {% if secondary_posts %}
+      <div class="insights-secondary">
+        {% for post in secondary_posts %}
+        <a class="insight-secondary-link" href="{{ post.get_absolute_url }}" aria-label="Read {{ post.title }}">
+          <article class="insight-card insight-card-secondary post-card">
+            {% if post.display_image_url %}
+            <div class="insight-thumb">
+              <img src="{{ post.display_image_url }}" alt="{{ post.title }} cover image">
             </div>
             {% endif %}
             <div class="insight-body">
-              <p class="meta">{{ featured_post.category.name|default:'Insight' }}</p>
-              <h3>{{ featured_post.title }}</h3>
-              <p class="insight-excerpt">{{ featured_post.excerpt|truncatewords:30 }}</p>
-              <p class="insight-date">{{ featured_post.published_at|date:'F j, Y' }}</p>
+              <p class="meta">{{ post.category.name|default:'Insight' }}</p>
+              <h3>{{ post.title }}</h3>
+              <p class="insight-excerpt">{{ post.excerpt|truncatewords:18 }}</p>
+              <p class="insight-date">{{ post.published_at|date:'F j, Y' }}</p>
             </div>
           </article>
         </a>
-        {% endif %}
-
-        {% if secondary_posts %}
-        <div class="insights-secondary">
-          {% for post in secondary_posts %}
-          <a class="insight-secondary-link" href="{{ post.get_absolute_url }}" aria-label="Read {{ post.title }}">
-            <article class="insight-card insight-card-secondary post-card">
-              {% if post.display_image_url %}
-              <div class="insight-thumb">
-                <img src="{{ post.display_image_url }}" alt="{{ post.title }} cover image">
-              </div>
-              {% endif %}
-              <div class="insight-body">
-                <p class="meta">{{ post.category.name|default:'Insight' }}</p>
-                <h3>{{ post.title }}</h3>
-                <p class="insight-excerpt">{{ post.excerpt|truncatewords:18 }}</p>
-                <p class="insight-date">{{ post.published_at|date:'F j, Y' }}</p>
-              </div>
-            </article>
-          </a>
-          {% endfor %}
-        </div>
-        {% endif %}
-
+        {% endfor %}
       </div>
+      {% endif %}
+
+    </div>
     {% else %}
-      <div class="empty-state">Articles coming soon — check back shortly.</div>
+    <div class="empty-state">Articles coming soon — check back shortly.</div>
     {% endif %}
 
     <div class="insights-footer-cta">
