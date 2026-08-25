@@ -967,6 +967,51 @@ input[type="hidden"] {
   line-height: 1.8;
 }
 
+.article-body a,
+.post-body a,
+.blog-content a,
+.project-body a,
+.article-card .article-body a {
+  color: #38bdf8;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+  word-break: break-word;
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+.article-body a:visited,
+.post-body a:visited,
+.blog-content a:visited,
+.project-body a:visited,
+.article-card .article-body a:visited {
+  color: #a78bfa;
+}
+
+.article-body a:hover,
+.article-body a:focus,
+.post-body a:hover,
+.post-body a:focus,
+.blog-content a:hover,
+.blog-content a:focus,
+.project-body a:hover,
+.project-body a:focus,
+.article-card .article-body a:hover,
+.article-card .article-body a:focus {
+  color: #7dd3fc;
+  text-decoration: underline;
+}
+
+.article-body a:focus-visible,
+.post-body a:focus-visible,
+.blog-content a:focus-visible,
+.project-body a:focus-visible,
+.article-card .article-body a:focus-visible {
+  outline: 2px solid #7dd3fc;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
