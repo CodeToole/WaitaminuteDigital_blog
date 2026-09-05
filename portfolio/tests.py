@@ -199,3 +199,9 @@ class ProjectImageValidationTests(TestCase):
         with self.assertRaises(ValidationError) as ctx:
             project.full_clean()
         self.assertIn("File size exceeds maximum allowed limit", str(ctx.exception))
+
+
+class ProjectDetail404Tests(TestCase):
+    def test_nonexistent_project_returns_404(self):
+        response = self.client.get(reverse('project_detail', kwargs={'slug': 'non-existent-slug'}))
+        self.assertEqual(response.status_code, 404)
