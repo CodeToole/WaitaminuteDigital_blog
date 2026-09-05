@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from .models import Project, Tag
 
@@ -25,5 +25,7 @@ def project_list(request):
 
 
 def project_detail(request, slug):
-    project = Project.objects.prefetch_related('tags').get(slug=slug)
+    # Use get_object_or_404 to fail securely with a 404 instead of raising
+    # unhandled Project.DoesNotExist 500 errors on invalid project slugs.
+    project = get_object_or_404(Project.objects.prefetch_related('tags'), slug=slug)
     return render(request, 'portfolio/project_detail.html', {'project': project})
